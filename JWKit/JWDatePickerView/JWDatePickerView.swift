@@ -1155,8 +1155,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                             if  minD != nil && maxD != nil {//都有值
                                     numberOfRows =  calendar.components(UnitDay, from: getDateRemoveStopLastUnit(date: minD!, lastUnit:UnitDay,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:UnitDay,isFromDate: false), options: NSCalendar.Options.matchLast).day!+1
                             }else if minD == nil && maxD == nil {
-                                let comps:DateComponents = calendar.components(ComUnit, from: minD!)
-                                if  isLeapYear(year: (comps.year!)) {
+                                if  isLeapYear(year: (self.currentDateCompnents?.year!)!) {
                                     numberOfRows = 366-1
                                 }else
                                 {
@@ -1246,9 +1245,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         if  minD != nil && maxD != nil {//都有值
                             selectedRows =  calendar.components(UnitDay, from: getDateRemoveStopLastUnit(date: minD!, lastUnit: UnitDay,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitDay,isFromDate: false), options: NSCalendar.Options.matchLast).day!
                         }else if minD == nil && maxD == nil {
-                            let comps:DateComponents = calendar.components(ComUnit, from: minD!)
-                            
-                            if  isLeapYear(year: (comps.year!)) {
+                            if  isLeapYear(year: (self.currentDateCompnents?.year!)!) {
                                 selectedRows =  (366-1)/2
                             }else
                             {
