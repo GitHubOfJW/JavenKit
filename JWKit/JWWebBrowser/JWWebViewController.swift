@@ -57,10 +57,12 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     }()
     
     
+    private var backFlag:Bool = false
     override func leftNavButtonClick(item: UIBarButtonItem) {
         if webView.canGoBack{
             webView.goBack()
         }else{
+            self.backFlag = true
             super.leftNavButtonClick(item: item)
         }
     }
@@ -164,6 +166,12 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     //弹出 alert
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         
+        if self.backFlag{
+            //点击确定
+            completionHandler()
+            return
+        }
+        
         let alertController:JWAlertController = JWAlertController(title: "提示", message: message, preferredStyle: JWAlertControllerStyle.alert)
         
         let confirmAction:JWAlertAction = JWAlertAction(title: "知道了", style:JWAlertActionStyle.default) { (action) in
@@ -181,6 +189,14 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     
     //弹出  取消 确定 面板
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        
+        
+        if self.backFlag{
+            //点击确定
+            completionHandler(false)
+            return
+        }
+        
         let alertController:JWAlertController = JWAlertController(title: "提示", message: message, preferredStyle: JWAlertControllerStyle.alert)
         
         let confirmAction:JWAlertAction = JWAlertAction(title: "确定", style:JWAlertActionStyle.default) { (action) in
@@ -203,6 +219,12 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     
     //js 弹出输入框
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        
+        if self.backFlag{
+            //点击确定
+            completionHandler("")
+            return
+        }
         
          let alertController:UIAlertController = UIAlertController(title: "", message:prompt , preferredStyle: UIAlertControllerStyle.alert)
         
@@ -334,5 +356,4 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
             webView.removeObserver(self, forKeyPath: titleKey)
         }
     }
- 
 }
