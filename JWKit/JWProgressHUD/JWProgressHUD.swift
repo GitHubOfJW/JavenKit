@@ -14,7 +14,6 @@ public enum JWProgressHUDType:Int{
     case success//成功
     case error//失败
     case dismiss//隐藏
-    case dismissImmediately//立即隐藏
 }
 
 class JWProgressHUD: UIView,CAAnimationDelegate {
@@ -83,11 +82,11 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
     //dismiss
     internal func bgBtnClick(bgBtn:UIButton) {
         if self.currentProgressType == .dismiss{
-            self.showMessage(message: "", type: JWProgressHUDType.dismiss)
+            self.showMessage(message: "", type: JWProgressHUDType.dismiss,complectionClosure: { })
         }else {
             if bgBtn.tag == 1 {
                 bgBtn.tag = 0
-                self.showMessage(message: "", type: JWProgressHUDType.dismiss)
+                self.showMessage(message: "", type: JWProgressHUDType.dismiss,complectionClosure: {})
             }else{
                 bgBtn.tag = 1
             }
@@ -95,9 +94,30 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
         }
     }
     
+    
+    private var complectionClosure:(()->Void)?
+    
     //展示弹出层
     func  showMessage(message:String?,type:JWProgressHUDType){
-         
+        
+        //展示弹出层
+        self.showMessage(message:message,type:type,complectionClosure: {})
+    }
+        
+    
+    //展示弹出层
+    func  showMessage(message:String?,type:JWProgressHUDType,complectionClosure:@escaping (()->Void)){
+        
+        if self.currentProgressType == type{
+            return
+        }
+        
+        if let closure = self.complectionClosure{
+            closure()
+        }
+        
+        self.complectionClosure = complectionClosure
+        
         let lastWinidow = UIApplication.shared.keyWindow
         lastWinidow?.addSubview(self)
         
@@ -239,22 +259,9 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
             self.currentProgressType = .dismiss
             return
             
-        }else if type == .dismissImmediately && self.currentProgressType != .dismiss{
-            
-            self.containerView.layer.removeAllAnimations()
-            
-            //执行弹出
-            animation.values = [1.0,1.2,1.0,0.5]
-            self.containerView.layer.add(animation, forKey: String(format:"%zd",type.rawValue))
-            //隐藏
-            opacityAnim.toValue  = 0
-            self.bgCoverView.layer.add(opacityAnim, forKey: "opacity")
-            
-            
-            self.currentProgressType = .dismiss
-            return
-            
         }
+        
+        print("current:\(self.currentProgressType) pre:\(type)")
         
         //根据当前的类型选择动画
         switch self.currentProgressType {
@@ -364,7 +371,6 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
                                         //通知 loadingView 开启loading动画 并切换状态
                                         self.loadingView.loadingType =  type
                                     }
-                                
                             })
                         }
                     })
@@ -492,8 +498,6 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
                 }
             }
             break
-        default:
-            break
         }
         
         self.currentProgressType = type
@@ -504,9 +508,13 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
         self.isHidden = false
     }
     
+    
     internal func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if  self.currentProgressType == .dismiss {
             self.isHidden = true
+            if let closure = self.complectionClosure{
+                closure()
+            }
         }else{
             self.isHidden = false
         }
