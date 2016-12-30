@@ -14,7 +14,7 @@ class JWMessageView: UIView,UIDynamicAnimatorDelegate {
         
         willSet{
             
-            if messageCount <= 0{
+            if newValue <= 0{
                 self.isHidden = true
             }else{
                 self.isHidden = false
@@ -30,7 +30,7 @@ class JWMessageView: UIView,UIDynamicAnimatorDelegate {
             
             let size:CGSize = NSString(string: fontStr).boundingRect(with: CGSize(width:UIScreen.main.bounds.width,height:UIScreen.main.bounds.height), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSFontAttributeName:messageFont], context: nil).size
             
-            self.frame = CGRect(x: 0, y: 0, width: size.width + size.height, height: size.height + 4)
+            self.frame = CGRect(x: 0, y: 0, width: size.width + size.height, height: size.height + 5)
             
             self.center = tempCenter
             

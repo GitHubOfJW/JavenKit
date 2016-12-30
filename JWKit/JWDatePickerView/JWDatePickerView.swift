@@ -799,7 +799,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             label = UILabel()
             label?.textAlignment = NSTextAlignment.center
 //            Font_120_218_317_416_515_614_712_810_908
-            label?.font = Font4
+            label?.font = UIFont.systemFont(ofSize: 18)
             label?.text = title
         }
         return label!

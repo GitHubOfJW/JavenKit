@@ -39,7 +39,7 @@ class JWDatePickerKeyBoardView: UIView {
     
     //蒙版
     private var cover:UIControl = {
-        let view:UIControl =  UIControl(frame: ScreenBounds)
+        let view:UIControl =  UIControl(frame: UIScreen.main.bounds)
         view.backgroundColor = UIColor.black
         view.alpha =  0.4
         
@@ -69,7 +69,7 @@ class JWDatePickerKeyBoardView: UIView {
         cover.addTarget(self, action: #selector(JWDatePickerKeyBoardView.exitKeyBoard), for: UIControlEvents.touchUpInside)
         
 //        FontPrompt_120_218_317_416_515_614_712_810_908
-        font = Font4
+        font = UIFont.systemFont(ofSize: 18)
         
         //标题View
         titleView = UIView()
@@ -127,7 +127,7 @@ class JWDatePickerKeyBoardView: UIView {
         super.layoutSubviews()
          
         //titleView
-        setH(256)
+         
         
         let titleViewX:CGFloat = 0
         let titleViewY:CGFloat = 0
@@ -174,7 +174,7 @@ class JWDatePickerKeyBoardView: UIView {
         super.didMoveToWindow()
         if isRemove == false {
             let window:UIWindow = UIApplication.shared.keyWindow!
-            cover.frame =  ScreenBounds
+            cover.frame =  UIScreen.main.bounds
             cover.alpha = 0.4
             window.addSubview(cover)
         }else

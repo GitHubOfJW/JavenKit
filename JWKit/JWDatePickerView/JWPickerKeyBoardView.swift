@@ -42,7 +42,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     
     //蒙版
     private var cover:UIControl = {
-        let view:UIControl =  UIControl(frame: ScreenBounds)
+        let view:UIControl =  UIControl(frame: UIScreen.main.bounds)
         view.backgroundColor = UIColor.black
         view.alpha =  0.4
         
@@ -75,7 +75,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
         cover.addTarget(self, action: #selector(JWDatePickerKeyBoardView.exitKeyBoard), for: UIControlEvents.touchUpInside)
         
 //        FontPrompt_120_218_317_416_515_614_712_810_908
-        font = Font4
+        font = UIFont.systemFont(ofSize: 18)
         
         //标题View
         titleView = UIView()
@@ -108,7 +108,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
         titleLabel?.textAlignment = NSTextAlignment.center
         titleLabel?.font = font
         titleLabel?.text = title
-        titleLabel?.textColor = FontGrayColor
+        titleLabel?.textColor = UIColor.darkGray
         titleView?.addSubview(titleLabel!)
         
         //pickerView
@@ -151,9 +151,9 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
         }else{
             label = UILabel()
             label?.textAlignment = NSTextAlignment.center
-            label?.textColor = FontGrayColor
+            label?.textColor = UIColor.darkGray
             //            Font_120_218_317_416_515_614_712_810_908
-            label?.font = Font4
+            label?.font = UIFont.systemFont(ofSize: 18)
             label?.text = title
         }
         return label!
@@ -179,9 +179,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-         
-        //titleView
-        setH(256)
+          
         
         let titleViewX:CGFloat = 0
         let titleViewY:CGFloat = 0
@@ -228,7 +226,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
         super.didMoveToWindow()
         if isRemove == false {
             let window:UIWindow = UIApplication.shared.keyWindow!
-            cover.frame =  ScreenBounds
+            cover.frame =  UIScreen.main.bounds
             cover.alpha = 0.4
             window.addSubview(cover)
         }else

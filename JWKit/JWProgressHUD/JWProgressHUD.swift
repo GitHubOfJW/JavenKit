@@ -156,8 +156,8 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
             promptLabelY = edge.top
         }else{
             tempLoadingViewHidden = false
-            promptLabelMaxW = loadingViewW
-            promptLabelY = loadingView.frame.maxY + 10
+            promptLabelMaxW = loadingViewW  + edge.left + edge.right
+            promptLabelY = loadingView.frame.maxY
         }
         
         
@@ -260,9 +260,7 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
             return
             
         }
-        
-        print("current:\(self.currentProgressType) pre:\(type)")
-        
+         
         //根据当前的类型选择动画
         switch self.currentProgressType {
         case .loading:

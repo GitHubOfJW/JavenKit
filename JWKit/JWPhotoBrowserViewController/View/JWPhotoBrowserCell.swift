@@ -150,9 +150,7 @@ class JWPhotoBrowserCell: UICollectionViewCell,UIScrollViewDelegate{
                     //设置成缩略图
                     if let tb  = thumbnail{
                         self.photoImageView.image = tb
-                       
                     }
-                    
                 })
             }
         }

@@ -34,7 +34,7 @@ class JWPhotoInteractiveTransitioning:UIPercentDrivenInteractiveTransition {
         case .changed://改变
             self.update(percent)
             //设置位置
-            self.browserVc?.operationView?.transform = CGAffineTransform(translationX: 0, y: translationY)
+            self.browserVc?.operationView.transform = CGAffineTransform(translationX: 0, y: translationY)
             break
         case .began://开始
             self.isStart = true
@@ -46,9 +46,9 @@ class JWPhotoInteractiveTransitioning:UIPercentDrivenInteractiveTransition {
                 
                 let rect:CGRect = cell.photoImageView.convert(cell.photoImageView.bounds, to: browserVc!.view)
                 
-                self.browserVc?.operationView = cell.photoImageView.snapshotView(afterScreenUpdates:false)!
+                self.browserVc?.operationView.image = cell.photoImageView.image //cell.photoImageView.snapshotView(afterScreenUpdates:false)!
                 
-                self.browserVc?.operationView?.frame =  rect
+                self.browserVc?.operationView.frame =  rect
                 
                 self.browserVc?.view.addSubview((self.browserVc?.operationView)!)
             }

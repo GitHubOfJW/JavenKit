@@ -10,19 +10,105 @@ import UIKit
 
 let bottomBarHeight:CGFloat = 0
 
-class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler {
+class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler {
+    
+    
+    
+    
+    var urlString:String?
+    
+    var filePathString:String?
+    
+    
+    
+    
+    //加载
+    func reload() {
+        if let urlStr = urlString{
+            let handlerData = handlerWebViewRequest(urlString: urlStr)
+            if  handlerData.0{
+                if let request = handlerData.1 {
+                    self.webView.load(request)
+                }
+            }
+            return
+        }
+        
+        if let filePathStr  = filePathString {
+            let handlerData = handlerWebViewRequest(urlString: filePathStr)
+            if  handlerData.0{
+                if let request = handlerData.1 {
+                    self.webView.load(request)
+                }
+            }
+        }
+    }
+    
+    
+    //覆盖父类的重新加载
+    func refresh(item: UIBarButtonItem) {
+        //iOS 7
+        URLCache.shared.removeAllCachedResponses()
+        
+        if #available(iOS 9.0, *) {
+            let types =  WKWebsiteDataStore.allWebsiteDataTypes()
+            let dateFrom  = Date(timeIntervalSince1970: 0.0)
+            WKWebsiteDataStore.default().removeData(ofTypes: types, modifiedSince: dateFrom, completionHandler: {
+                self.reload()
+            })
+        } else   if #available(iOS 8.0, *) {
+            var Paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+            
+            let libraryPath:String = Paths[0]
+            
+            let  bundleId:String  = Bundle.main.object(forInfoDictionaryKey: "CFBundleIdentifier") as! String
+            
+            let webkitFolderInLib = String(format:"%@/WebKit",libraryPath)
+            
+            let webKitFolderInCaches = String(format:"%@/Caches/%@/WebKit",libraryPath,bundleId)
+            
+            let webKitFolderInCachesfs = String(format:"%@/Caches/%@/fsCachedData",libraryPath,bundleId)
+            
+            do{
+                try FileManager.default.removeItem(atPath: webKitFolderInCaches)
+                try FileManager.default.removeItem(atPath: webkitFolderInLib)
+                try FileManager.default.removeItem(atPath: webKitFolderInCachesfs)
+            }catch{
+                
+            }
+            
+            self.webView.reload()
+        }
+        
+    }
+    
+    
+    //加工一下请求
+    private func handlerWebViewRequest(urlString:String) -> (Bool,URLRequest?) {
+        
+        if let url =  URL(string: urlString){
+            let request:URLRequest = URLRequest(url:url)
+            return (true,request)
+        }
+        
+        return (false,nil)
+        
+    }
+    
+    
+    
     
     
     var navigationActionClosure:((String)->Bool)?
     
-     
+    
     private let estimatedProgressKey = "estimatedProgress"
     private let loadingKey = "loading"
     private let titleKey = "title"
     
     //进度
     lazy var progressView:JWWebViewProgressView = {
-        let progressView:JWWebViewProgressView = JWWebViewProgressView(frame: CGRect(x: 0, y: 64, width: ScreenW, height: 3))
+        let progressView:JWWebViewProgressView = JWWebViewProgressView(frame: CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: 3))
         progressView.isHidden = true
         return progressView
     }()
@@ -50,29 +136,21 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
         config.userContentController = userContent
         
        
-        let webView:WKWebView =  WKWebView(frame:CGRect(x: 0, y: 0, width: ScreenW, height: ScreenH - bottomBarHeight), configuration: config)
+        let webView:WKWebView =  WKWebView(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - bottomBarHeight), configuration: config)
         webView.allowsBackForwardNavigationGestures  = true
         
         return webView
     }()
     
     
-    private var backFlag:Bool = false
-    override func leftNavButtonClick(item: UIBarButtonItem) {
-        if webView.canGoBack{
-            webView.goBack()
-        }else{
-            self.backFlag = true
-            super.leftNavButtonClick(item: item)
-        }
-    }
     
     
     private var addObserverFlag:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-  
+   
+        
         view.addSubview(webView)
         
         let refreshItem:UIBarButtonItem = UIBarButtonItem(title: "刷新", style: UIBarButtonItemStyle.done, target: self, action: #selector(JWWebViewController.refresh(item:)))
@@ -100,16 +178,14 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
         webView.configuration.userContentController.add(self, name: "defaultHandler")
         
         
+        //刷新
+        self.reload()
     }
     
     func close(item:UIBarButtonItem) {
         if let nav = navigationController{
            nav.popViewController(animated: true)
         }
-    }
-    
-    func refresh(item:UIBarButtonItem) {
-        webView.reload()
     }
     
     
@@ -166,11 +242,6 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     //弹出 alert
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         
-        if self.backFlag{
-            //点击确定
-            completionHandler()
-            return
-        }
         
         let alertController:JWAlertController = JWAlertController(title: "提示", message: message, preferredStyle: JWAlertControllerStyle.alert)
         
@@ -191,11 +262,6 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         
         
-        if self.backFlag{
-            //点击确定
-            completionHandler(false)
-            return
-        }
         
         let alertController:JWAlertController = JWAlertController(title: "提示", message: message, preferredStyle: JWAlertControllerStyle.alert)
         
@@ -220,12 +286,7 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     //js 弹出输入框
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         
-        if self.backFlag{
-            //点击确定
-            completionHandler("")
-            return
-        }
-        
+       
          let alertController:UIAlertController = UIAlertController(title: "", message:prompt , preferredStyle: UIAlertControllerStyle.alert)
         
         
@@ -265,22 +326,9 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     
     //请求准备发起  决定是否发起
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        print("decidePolicyFor navigationAction")
+        //print("decidePolicyFor navigationAction")
         
-        if AppConfigure.shared().hanlderShareUrl(shareUrl: navigationAction.request.url?.absoluteString, completion: { (resp) in
-            
-            if resp.isKind(of:BaseResp.classForCoder()){
-                let res:BaseResp = resp
-                if res.errCode == WXSuccess.rawValue{
-                    self.showMessage(msg: "分享成功")
-                }else{
-                    self.showMessage(msg: "分享失败")
-                }
-            }
-        }){
-            //取消
-            decisionHandler(WKNavigationActionPolicy.cancel)
-        }else{
+        
             if let closure =  self.navigationActionClosure{
                 if let url  =  navigationAction.request.url{
                     if closure(url.absoluteString){
@@ -289,16 +337,15 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
                         decisionHandler(WKNavigationActionPolicy.cancel)
                     }
                 }
-            }
-            decisionHandler(WKNavigationActionPolicy.allow)
-            
+            }else{
+                decisionHandler(WKNavigationActionPolicy.allow)
         }
     }
     
     
     //请求发起收到响应 决定是否跳转
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        print("decidePolicyFor")
+        //print("decidePolicyFor")
         decisionHandler(WKNavigationResponsePolicy.allow)
     }
     
@@ -307,36 +354,36 @@ class JWWebViewController: JWBaseViewController,WKNavigationDelegate,WKUIDelegat
     //导航失败
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         //刷新状态
-        print("导航失败")
+        //print("导航失败")
     }
     
     //请求完成
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         navigationItem.title =  webView.title
          //刷新状态
-        print("didFinish")
+        //print("didFinish")
     }
     
     //开始返回内容
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        print("didCommit")
+        //print("didCommit")
     }
     
     //页面开始加载
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        print("didStartProvisionalNavigation")
+        //print("didStartProvisionalNavigation")
     }
     
     //收到重定向
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        print("重定向")
+        //print("重定向")
     }
     
     
     //页面加载失败
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         
-        print("didFailProvisionalNavigation")
+        //print("didFailProvisionalNavigation")
     }
   
     

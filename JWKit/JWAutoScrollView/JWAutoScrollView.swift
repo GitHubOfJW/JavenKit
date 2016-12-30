@@ -60,10 +60,13 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     
     weak var delegate:JWAutoScrollViewDelegate?{
         didSet{
-            if  self.delegate != nil{
-                self.reloadData()
+            if self.superview != nil{
+                if  self.delegate != nil{
+                    self.reloadData()
+                }
             }
         }
+            
     }
     
     private var pageCount:Int = 0
@@ -84,7 +87,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
         bgScrollView?.showsVerticalScrollIndicator =  false
         bgScrollView?.showsHorizontalScrollIndicator = false
         bgScrollView?.isDirectionalLockEnabled = true
-//        bgScrollView?.bounces =  false
+        //        bgScrollView?.bounces =  false
         bgScrollView?.delegate = self
         
         bgScrollView?.addSubview(UIView(frame: CGRect()))
@@ -93,7 +96,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
             let imageView = JWAutoScrollViewButton()
             imageView.adjustsImageWhenHighlighted = false
             imageView.contentMode = UIViewContentMode.scaleAspectFill
-//            imageView.backgroundColor = UIColor.red
+            //            imageView.backgroundColor = UIColor.red
             imageView.imageView?.contentMode =  UIViewContentMode.scaleAspectFill
             imageView.tag = 0
             imageView.addTarget(self, action: #selector(JWAutoScrollView.itemBtnClick(btn:)), for: UIControlEvents.touchUpInside)
@@ -131,7 +134,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     }
     
     //MARK:代理
-  
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if pageCount<=1 {
@@ -179,12 +182,12 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     
     //处理
     internal func handler(){
-           bgScrollView?.isPagingEnabled = false
-           currentIndex = currentIndex+1
+        bgScrollView?.isPagingEnabled = false
+        currentIndex = currentIndex+1
         
-            //判断越界
-            if currentIndex >= expand * pageCount {
-                
+        //判断越界
+        if currentIndex >= expand * pageCount {
+            
             currentIndex  =  expand*pageCount/2-1
             preIndex = currentIndex
             
@@ -197,12 +200,12 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
                 index += 1
             }
             //归位
-                bgScrollView?.setContentOffset(CGPoint(x:CGFloat(currentIndex)*(bgScrollView?.bounds.width)!,y:0), animated: false)
-                currentIndex =  currentIndex + 1;
-            }
+            bgScrollView?.setContentOffset(CGPoint(x:CGFloat(currentIndex)*(bgScrollView?.bounds.width)!,y:0), animated: false)
+            currentIndex =  currentIndex + 1;
+        }
         
-           isScrolling = true
-           bgScrollView?.setContentOffset(CGPoint(x:CGFloat(currentIndex)*(bgScrollView?.bounds.width)!,y:0), animated: true)
+        isScrolling = true
+        bgScrollView?.setContentOffset(CGPoint(x:CGFloat(currentIndex)*(bgScrollView?.bounds.width)!,y:0), animated: true)
         
     }
     
@@ -266,7 +269,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
                 view.tag = (currentIndex-1)%pageCount
                 view.frame = CGRect(x: x, y: 0, width: (bgScrollView!.bounds.width), height: (bgScrollView?.bounds.height)!)
                 
-               
+                
             }
         }
         preIndex = currentIndex
@@ -310,23 +313,26 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
                 let x:CGFloat = (bgScrollView?.bounds.width)! * CGFloat(tempIndex)
                 let w:CGFloat = (bgScrollView?.bounds.width)!
                 let h:CGFloat = (bgScrollView?.bounds.height)!
-                 
+                
                 if (pageCount == 1&&index != 1) {
                     view.frame  = CGRect(x: x, y: 0, width: w, height: h)
-                 
+                    
                     index += 1
                     continue
                 }
                 
+                
+                view.frame  = CGRect(x: x, y: 0, width: w, height: h)
+                
                 if let d =  delegate {
                     if (tempIndex % pageCount) < pageCount {
-                       d.autoScrollView(autoScrollView: self, index: tempIndex%pageCount, imageButton: view)
+                        d.autoScrollView(autoScrollView: self, index: tempIndex%pageCount, imageButton: view)
                         //设置当前索引
                         view.tag = tempIndex%pageCount
                     }
                 }
                 
-                view.frame  = CGRect(x: x, y: 0, width: w, height: h)
+               
                 index += 1
             }
             
@@ -335,7 +341,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
             
             bgScrollView?.contentSize = CGSize(width:CGFloat(expand * pageCount)*(bgScrollView?.bounds.width)!, height: (bgScrollView?.bounds.height)!)
             
-         
+            
             //开启定时
             timerStart()
         }
@@ -360,16 +366,16 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
         }
     }
     
-     
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-         
+        
         let bgScX:CGFloat = 0
         let bgScY:CGFloat = 0
         let bgScW:CGFloat = bounds.width
@@ -395,24 +401,16 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
         
         
         if flag {
-            for btn:JWAutoScrollViewButton in  btnArray{
-                if btn.bounds.width != bgScW{
-                    let origin:CGPoint = btn.bounds.origin
-                    btn.frame =  CGRect(x: origin.x, y: origin.y, width: bgScW, height: bgScH)
-                }
-            }
+            reloadData()
         }
     }
+    
     
     override func removeFromSuperview() {
         super.removeFromSuperview()
         timerEnd()
     }
     
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        reloadData()
-    }
 }
 
 class JWAutoScrollViewButton: UIButton {
@@ -424,4 +422,4 @@ class JWAutoScrollViewButton: UIButton {
         return contentRect
     }
 }
- 
+

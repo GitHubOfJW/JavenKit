@@ -16,7 +16,7 @@ public enum JWAlertControllerStyle:Int{
 
 
 class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate{
-
+    
     private var preferredStyle:JWAlertControllerStyle = JWAlertControllerStyle.actionSheet
     
     private let containerViewPadding:CGFloat = 20
@@ -30,7 +30,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
     
     //边框阴影的view
     private let shadowView:UIButton = UIButton()
- 
+    
     //标题
     private let titleLabel:UILabel = UILabel()
     
@@ -89,8 +89,8 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         
         if preferredStyle == .popover{
             if let sourceView =  sourceView{
-                 self.sourceViewRect = sourceView.convert(sourceView.bounds, to: self.view.window ?? UIApplication.shared.keyWindow)
-                 self.preferredStyle   = preferredStyle
+                self.sourceViewRect = sourceView.convert(sourceView.bounds, to:  UIApplication.shared.keyWindow)
+                self.preferredStyle   = preferredStyle
             }
         }
         
@@ -113,13 +113,13 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
     
     //初始化
     public convenience init(title: String?, message: String?, preferredStyle: JWAlertControllerStyle){
-       self.init()
+        self.init()
         
         
         self.modalPresentationStyle  =  .custom
         
         
-       //标题
+        //标题
         if let t =  title {
             self.title = t
         }
@@ -129,15 +129,15 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
             self.message =  msg
         }
         
-    
+        
         //样式
         self.preferredStyle = preferredStyle
         
         
         self.transitioningDelegate = self
- 
+        
     }
-  
+    
     
     
     //加载
@@ -160,8 +160,8 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         shadowView.layer.masksToBounds = false
         view.addSubview(shadowView)
         
-       
-            
+        
+        
         //展示的View
         containerView.backgroundColor = UIColor.white
         containerView.layer.cornerRadius = 13.0
@@ -189,11 +189,11 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         messageLabel.numberOfLines = 0
         messageLabel.isUserInteractionEnabled = true
         messageLabel.isHidden = true
-        messageLabel.font = UIFont.systemFont(ofSize:15)
+        messageLabel.font = UIFont.systemFont(ofSize:16)
         messageLabel.textAlignment = NSTextAlignment.center
         messageLabel.textColor = UIColor(red: 94/255.0, green: 96/255.0, blue: 102/255.0, alpha: 1)
         containerView.addSubview(messageLabel)
- 
+        
         //线
         lineView.backgroundColor = UIColor(white: 0.85, alpha: 1)
         containerView.addSubview(lineView)
@@ -243,7 +243,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
                 actionBtn.setTitleColor(UIColor.white, for: UIControlState.normal)
                 actionBtn.setTitleColor(UIColor.white, for: UIControlState.highlighted)
             }else{
-            
+                
                 actionBtn.setBackgroundImage(UIImage(named:"normalBg"), for: UIControlState.normal)
                 actionBtn.setBackgroundImage(UIImage(named:"highlightBg"), for: UIControlState.highlighted)
                 
@@ -286,7 +286,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         //如果是popover模式
         if preferredStyle == .popover{
             shadowViewW = 85
-            btnH = 35
+            btnH = 40
         }
         
         let containViewW:CGFloat = shadowViewW
@@ -301,7 +301,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         if let title = self.title{
             if title != ""{
                 titleY = 20
-               titleH = boundingRect(size: CGSize(width:titleW,height:UIScreen.main.bounds.height), font:titleLabel.font, str: title).height + 5
+                titleH = boundingRect(size: CGSize(width:titleW,height:UIScreen.main.bounds.height), font:titleLabel.font, str: title).height + 5
                 titleLabel.isHidden = false
                 titleLabel.text = title
             }
@@ -314,7 +314,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         let messageW:CGFloat = titleW
         var messageH:CGFloat = 0
         var messageY:CGFloat = titleLabel.frame.maxY
-      
+        
         //计算高度
         if let message = self.message{
             if message != ""{
@@ -340,7 +340,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         let operationW:CGFloat = containViewW
         let operationX:CGFloat = (containViewW - operationW)/2
         
-       
+        
         let operationH:CGFloat = (self.actions.count > 2 || preferredStyle == .popover) ? btnH * CGFloat(self.actions.count) : btnH
         operationView.frame = CGRect(x: operationX, y: operationY, width: operationW, height: operationH)
         
@@ -355,8 +355,8 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
             let btnY:CGFloat = (self.actions.count > 2 || preferredStyle == .popover) ? (btnH * CGFloat(i)) : 0
             
             if (messageLabel.isHidden && titleLabel.isHidden) && i == 0 && self.preferredStyle ==  .actionSheet {
-                    btn.lineView.isHidden = true
-                }
+                btn.lineView.isHidden = true
+            }
             
             btn.frame = CGRect(x: btnX, y: btnY, width: btnW, height: btnH)
             //累计
@@ -364,7 +364,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         }
         
         
-       
+        
         
         //展示的View
         let containViewH:CGFloat = operationView.frame.maxY
@@ -455,7 +455,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
             
             //计算背景
             self.arrowLayer.path = self.getPath(arrowPoint: CGPoint(x:arrowPointX,y:arrowPointY), containFrame: self.shadowView.frame).cgPath
-        
+            
         }else{
             self.arrowLayer.isHidden = true
             shadowView.frame = CGRect(x: shadowViewX, y: shadowViewY, width: shadowViewW, height: shadowViewH)
@@ -472,17 +472,17 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         {
             return
         }else if btn.tag == -1{
-            dismiss(animated: true, completion: { 
+            dismiss(animated: true, completion: {
                 
             })
             return
         }else{
-           dismiss(animated: true, completion: { 
-              let action =  self.actions[btn.tag]
-             if let ac =  action.handler{
-               ac(action)
-             }
-           })
+            dismiss(animated: true, completion: {
+                let action =  self.actions[btn.tag]
+                if let ac =  action.handler{
+                    ac(action)
+                }
+            })
         }
     }
     
@@ -530,7 +530,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
     
     
     
-
+    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.modalPresentationStyle  =  .custom
         let presentTrasition:JWAlertPresentTransitioning = JWAlertPresentTransitioning()
@@ -594,7 +594,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         
         return path
     }
-
+    
 }
 
 

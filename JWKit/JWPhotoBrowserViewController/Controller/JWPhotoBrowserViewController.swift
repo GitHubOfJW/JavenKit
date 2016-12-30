@@ -8,6 +8,7 @@
 
 import UIKit
  
+let reuseIdentifier:String = "reuseIdentifier"
 
 class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerTransitioningDelegate{
 
@@ -113,7 +114,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
     
     
     
-    var operationView:UIView?
+    var operationView:UIImageView = UIImageView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
