@@ -112,17 +112,20 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                     
                     //当前时间比最小时间
                     if currentDate.compare(minD) == ComparisonResult.orderedAscending{
-                        _date = minD
+//                        _date = minD
+                        self.date = minD
                     }
                     
                     //判断最大日期的范围
                     if let tempMaxDate = maxDate{
                          if currentDate.compare(tempMaxDate) == ComparisonResult.orderedDescending{//当前时间比最大时间大
-                             _date =  tempMaxDate
+//                             _date =  tempMaxDate
+                            self.date = tempMaxDate
                          }
                     }
                 }else{
-                    _date =  minD
+//                    _date =  minD
+                    self.date = minD
                 }
                 
                 //刷新
@@ -219,16 +222,19 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                     if let tempMinDate = minDate{
                         //当前时间比最小时间
                         if currentDate.compare(tempMinDate) == ComparisonResult.orderedAscending{
-                            _date = tempMinDate
+//                            _date = tempMinDate
+                            self.date = tempMinDate
                         }
                     }
                     
                     //判断最大日期的范围
                     if currentDate.compare(maxD) == ComparisonResult.orderedDescending{//当前时间比最大时间大
-                        _date =  maxD
+//                        _date =  maxD
+                        self.date = maxD
                     }
                 }else{
-                    _date =  maxD
+//                    _date =  maxD
+                    self.date = maxD
                 }
 
                 
@@ -312,11 +318,6 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
              
                 //刷新
                 pickerView.reloadAllComponents()
-            }else
-            {
-                _date = newValue
-                
-                pickerView .reloadAllComponents()
             }
         }
         get{
@@ -418,7 +419,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         
         if let d =  date {
             //赋值私有属性
-            _date =  d
+//            _date =  d
+            self.date = d
             
             //设置当前的comps
             currentDateCompnents =  calendar.components(ComUnit, from: d)
