@@ -8,7 +8,7 @@
 
 import UIKit
  
-let reuseIdentifier:String = "reuseIdentifier"
+let PBReuseIdentifier:String = "reuseIdentifier"
 
 class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerTransitioningDelegate{
 
@@ -123,7 +123,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
 //        let b = CGFloat(arc4random_uniform(255))/255.0
 //        view.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1)
         
-        self.collectionView!.register(JWPhotoBrowserCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(JWPhotoBrowserCell.self, forCellWithReuseIdentifier: PBReuseIdentifier)
         
         self.transitioningDelegate = self
         
@@ -150,7 +150,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         //1.获取cell
-        let cell:JWPhotoBrowserCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! JWPhotoBrowserCell
+        let cell:JWPhotoBrowserCell = collectionView.dequeueReusableCell(withReuseIdentifier: PBReuseIdentifier, for: indexPath) as! JWPhotoBrowserCell
         
         //2.设置cell
         cell.photoBrowserItem =  photoSource[indexPath.item]
