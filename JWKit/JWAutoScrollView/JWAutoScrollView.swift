@@ -66,7 +66,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
                 }
             }
         }
-            
+        
     }
     
     private var pageCount:Int = 0
@@ -289,6 +289,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
                 }
                 return
             }
+            
             //低于1张不轮播
             if count > 1 {
                 if self.bottomPrompt != nil && self.bottomPrompt?.compare("") != ComparisonResult.orderedSame{
@@ -305,6 +306,13 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
             
             //设置页数
             pageControl?.numberOfPages = count
+            
+            if count <= 1{
+                self.bgScrollView?.isScrollEnabled = false
+            }else{
+                self.bgScrollView?.isScrollEnabled = true
+            }
+            
             //初始化位置
             var index:Int = 0
             for  view:JWAutoScrollViewButton in btnArray
@@ -323,6 +331,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
                 
                 
                 view.frame  = CGRect(x: x, y: 0, width: w, height: h)
+                 
                 
                 if let d =  delegate {
                     if (tempIndex % pageCount) < pageCount {
@@ -332,7 +341,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
                     }
                 }
                 
-               
+                
                 index += 1
             }
             

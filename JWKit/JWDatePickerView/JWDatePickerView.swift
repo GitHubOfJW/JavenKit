@@ -39,13 +39,13 @@ public enum JWDatePickerMode:Int{
 
 
 //Unit
-let UnitYear:NSCalendar.Unit = [.year]
-let UnitMonth:NSCalendar.Unit = [.month]
-let UnitDay:NSCalendar.Unit = [.day]
-let UnitHour:NSCalendar.Unit = [.hour]
-let UnitMinute:NSCalendar.Unit = [.minute]
-let UnitSecond:NSCalendar.Unit = [.second]
-let Option:NSCalendar.Options = NSCalendar.Options(rawValue: 0)
+//let  .year:NSCalendar.Unit = [.year]
+//let  .month:NSCalendar.Unit = [.month]
+//let  .day:NSCalendar.Unit = [.day]
+//let  .hour:NSCalendar.Unit = [.hour]
+//let  .minute:NSCalendar.Unit = [.minute]
+//let  .second:NSCalendar.Unit = [.second]
+//let Option:NSCalendar.Options = NSCalendar.Options(rawValue: 0)
 
 
 class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
@@ -68,6 +68,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     //是否正在滚动
     private var currentOperationComponent:Int = 0
     
+    typealias UnitType = Calendar.Component
+    
     /**
      *   最小日期
      */
@@ -85,8 +87,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                        _maxDate = minD
                     }else{
                         //如果是需要限制在短时间内的
-                        let unitSubArray:[UInt] = (pickerModeDict[pickerMode!]?.first!)!
-                        if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{
+                        let unitSubArray:[UnitType] = (pickerModeDict[pickerMode!]?.first!)!
+                        if unitSubArray.first !=  .year && unitSubArray.last ==  .day{
                             let destinationDate =  getDateAddOrReduceYear(date: minD, isAdd: true)
                             
                             //如果最大日期超过最小日期一年后的范围
@@ -96,8 +98,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         }
                     }
                 }else{//最大日期没有值，如果模式需要限制在一年内
-                    let unitSubArray:[UInt] = (pickerModeDict[pickerMode!]?.first!)!
-                    if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{
+                    let unitSubArray:[UnitType] = (pickerModeDict[pickerMode!]?.first!)!
+                    if unitSubArray.first !=  .year && unitSubArray.last ==  .day{
                        
                         //一年后的日期
                         let destinationDate:Date = self.getDateAddOrReduceYear(date: minD, isAdd: true)
@@ -142,8 +144,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             
             if _minDate ==  nil {
                 
-                let unitSubArray:[UInt] = (pickerModeDict[pickerMode!]?.first!)!
-                if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{
+                let unitSubArray:[UnitType] = (pickerModeDict[pickerMode!]?.first!)!
+                if unitSubArray.first !=  .year && unitSubArray.last ==  .day{
                     
                     //如果最大日期有值
                     if let tempMaxDate = _maxDate{
@@ -164,7 +166,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         }
                         
                         //日期
-                        let lastDate:Date = calendar.date(byAdding: addComps, to:date, options: NSCalendar.Options.matchLast)!
+                        let lastDate:Date = calendar.date(byAdding: addComps, to:date)!
                         
                         _minDate =  lastDate
                     }
@@ -194,8 +196,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         _minDate = maxD
                     }else{
                         //如果是需要限制在短时间内的
-                        let unitSubArray:[UInt] = (pickerModeDict[pickerMode!]?.first!)!
-                        if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{
+                        let unitSubArray:[UnitType] = (pickerModeDict[pickerMode!]?.first!)!
+                        if unitSubArray.first !=  .year && unitSubArray.last ==  .day{
                             let destinationDate =  getDateAddOrReduceYear(date: maxD, isAdd: false)
                             
                             //如果最小日期超过最大日期一年后的范围
@@ -205,8 +207,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         }
                     }
                 }else{//最大日期没有值，如果模式需要限制在一年内
-                    let unitSubArray:[UInt] = (pickerModeDict[pickerMode!]?.first!)!
-                    if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{
+                    let unitSubArray:[UnitType] = (pickerModeDict[pickerMode!]?.first!)!
+                    if unitSubArray.first !=  .year && unitSubArray.last ==  .day{
                         
                         //一年后的日期
                         let destinationDate:Date = self.getDateAddOrReduceYear(date: maxD, isAdd: false)
@@ -251,8 +253,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         }
         get{
             if _maxDate ==  nil {
-                let unitSubArray:[UInt] = (pickerModeDict[pickerMode!]?.first!)!
-                if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{
+                let unitSubArray:[UnitType] = (pickerModeDict[pickerMode!]?.first!)!
+                if unitSubArray.first !=  .year && unitSubArray.last ==  .day{
                     
                     //如果最大日期有值
                     if let tempMinDate = _minDate{
@@ -273,7 +275,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                             }
                             
                             //日期
-                            let lastDate:Date = calendar.date(byAdding: addComps, to:date, options: NSCalendar.Options.matchLast)!
+                            let lastDate:Date = calendar.date(byAdding: addComps, to:date)!
                             
                             _maxDate =  lastDate
                         }
@@ -311,7 +313,9 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 
                 
                 //设置当前的comps
-                 currentDateCompnents =  calendar.components(ComUnit, from: d)
+                currentDateCompnents =  calendar.dateComponents([.year,.day,.month,.hour,.minute,.second]
+, from: d)
+//                calendar.comp
                 _date =  d
                 
                  toCurentDate(animated: false)
@@ -329,7 +333,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 _date = Date()
                 
                 //设置当前的comps
-                currentDateCompnents =  calendar.components(ComUnit, from: _date!)
+                currentDateCompnents =  calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: _date!)
                 
                 return _date
             }
@@ -338,8 +342,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     
     
     //单位
-    private var _unitDescDict:[UInt:String]!
-    private var unitDescDict:[UInt:String]!{
+    private var _unitDescDict:[UnitType:String]!
+    private var unitDescDict:[UnitType:String]!{
         set{
             if let dict = newValue {
                 _unitDescDict = dict
@@ -347,13 +351,13 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         }
         get{
             if _unitDescDict == nil {
-                _unitDescDict = [UInt:String]()
-                _unitDescDict[UnitYear.rawValue] = "年"
-                _unitDescDict[UnitMonth.rawValue] = "月"
-                _unitDescDict[UnitDay.rawValue] = "日"
-                _unitDescDict[UnitHour.rawValue] = "时"
-                _unitDescDict[UnitMinute.rawValue] = "分"
-                _unitDescDict[UnitSecond.rawValue] = "秒"
+                _unitDescDict = [UnitType:String]()
+                _unitDescDict[UnitType.year] = "年"
+                _unitDescDict[UnitType.month] = "月"
+                _unitDescDict[UnitType.day] = "日"
+                _unitDescDict[UnitType.hour] = "时"
+                _unitDescDict[UnitType.minute] = "分"
+                _unitDescDict[UnitType.second] = "秒"
             }
             
             return _unitDescDict
@@ -407,7 +411,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             //如果等于 nil 去获取
             if  _currentDateCompnents == nil {
                 //设置当前的comps
-                _currentDateCompnents =  calendar.components(ComUnit, from: date!)
+                _currentDateCompnents =  calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: date!)
             }
             return _currentDateCompnents
         }
@@ -423,7 +427,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             self.date = d
             
             //设置当前的comps
-            currentDateCompnents =  calendar.components(ComUnit, from: d)
+            currentDateCompnents =  calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: d)
             
             toCurentDate(animated: animated)
         }
@@ -473,7 +477,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
      *  获取一天中的  最小时间   最大时间
      */
     func dayFirstOrLastDate(date:Date,isLast:Bool) -> Date {
-        let dateComps:DateComponents = calendar.components(ComUnit, from: date)
+        let dateComps:DateComponents = calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: date)
         let hour:Int = dateComps.hour!
         let minute:Int = dateComps.minute!
         let second:Int = dateComps.second!
@@ -490,7 +494,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             newDateComps.second = -second;
         }
         
-        let d:Date = calendar.date(byAdding: newDateComps, to: date, options: NSCalendar.Options.matchLast)!
+        let d:Date = calendar.date(byAdding: newDateComps, to: date)!
         return d
 
     }
@@ -523,14 +527,14 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     }
 
  
-    //comUnit
-    private let ComUnit:NSCalendar.Unit = [.year,.day,.month,.hour,.minute,.second]
+    //[.year,.day,.month,.hour,.minute,.second]    private let [.year,.day,.month,.hour,.minute,.second]:[UnitType] = [.year,.day,.month,.hour,.minute,.second]
+
  
     //记录 当前日期选中
     private var sourceCompnentRowDict:[Int:Int] = [Int:Int]()
     
     //Calendar
-    private let calendar:NSCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!//NSCalendar(identifier: Calendar.Identifier.gregorian)
+    private let calendar:Calendar = Calendar(identifier: Calendar.Identifier.gregorian)//NSCalendar(identifier: Calendar.Identifier.gregorian)
     
     //MARK:控件
     
@@ -541,39 +545,39 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     
     
     //日期选择控件模式
-    private var pickerModeDict:[JWDatePickerMode:[[UInt]]] = {
-        var pickerMode:[JWDatePickerMode:[[UInt]]] =  [JWDatePickerMode:[[UInt]]]()
+    private var pickerModeDict:[JWDatePickerMode:[[UnitType]]] = {
+        var pickerMode:[JWDatePickerMode:[[UnitType]]] =  [JWDatePickerMode:[[UnitType]]]()
         
           // 年月日 时 分 秒
-          pickerMode[.dateAndTime] = [[UnitYear.rawValue,UnitMonth.rawValue,UnitDay.rawValue],[UnitHour.rawValue],[UnitMinute.rawValue],[UnitSecond.rawValue]]
+          pickerMode[.dateAndTime] = [[ .year, .month, .day],[ .hour],[ .minute],[ .second]]
         
           //  月日 时 分 秒
-          pickerMode[.dateAndTimeRYear] = [[UnitMonth.rawValue,UnitDay.rawValue],[UnitHour.rawValue],[UnitMinute.rawValue],[UnitSecond.rawValue]]
+          pickerMode[.dateAndTimeRYear] = [[ .month, .day],[ .hour],[ .minute],[ .second]]
         
           //  年月日 时
-          pickerMode[.dateAndHour] = [[UnitYear.rawValue,UnitMonth.rawValue,UnitDay.rawValue],[UnitHour.rawValue]]
+          pickerMode[.dateAndHour] = [[ .year, .month, .day],[ .hour]]
 
         
           // 时分秒
-          pickerMode[.time] = [[UnitHour.rawValue],[UnitMinute.rawValue],[UnitSecond.rawValue]]
+          pickerMode[.time] = [[ .hour],[ .minute],[ .second]]
         
           //时分
-          pickerMode[.timeRSecond] = [[UnitHour.rawValue],[UnitMinute.rawValue]]
+          pickerMode[.timeRSecond] = [[ .hour],[ .minute]]
         
           // 年月日
-          pickerMode[.date] = [[UnitYear.rawValue],[UnitMonth.rawValue],[UnitDay.rawValue]]
+          pickerMode[.date] = [[ .year],[ .month],[ .day]]
         
           // 年 月 日 时
-          pickerMode[.dateAddHour] = [[UnitYear.rawValue,UnitMonth.rawValue,UnitDay.rawValue],[UnitHour.rawValue]]
+          pickerMode[.dateAddHour] = [[ .year, .month, .day],[ .hour]]
         
           // 年月日  时 分
-          pickerMode[.dateAndTimeRSecond] = [[UnitYear.rawValue,UnitMonth.rawValue,UnitDay.rawValue],[UnitHour.rawValue],[UnitMinute.rawValue]]
+          pickerMode[.dateAndTimeRSecond] = [[ .year, .month, .day],[ .hour],[ .minute]]
         
           //月日 时 分
-          pickerMode[.dateAndTimeRYearAndSecond] = [[UnitMonth.rawValue,UnitDay.rawValue],[UnitHour.rawValue],[UnitMinute.rawValue],[UnitSecond.rawValue]]
+          pickerMode[.dateAndTimeRYearAndSecond] = [[ .month, .day],[ .hour],[ .minute],[ .second]]
         
           //年 月  日  时  分 秒
-         pickerMode[.dateAndTimeForAllComponent] = [[UnitYear.rawValue],[UnitMonth.rawValue],[UnitDay.rawValue],[UnitHour.rawValue],[UnitMinute.rawValue],[UnitSecond.rawValue]]
+         pickerMode[.dateAndTimeForAllComponent] = [[ .year],[ .month],[ .day],[ .hour],[ .minute],[ .second]]
         
         return pickerMode
     }()
@@ -604,7 +608,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
    internal func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
         //1.获取当前模式
-        let unitArray:[[UInt]] = pickerModeDict[pickerMode!]!
+        let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
         
         //2.返回该模式下的components
         return unitArray.count
@@ -613,18 +617,18 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     
    internal func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         //1.获取当前模式
-        let unitArray:[[UInt]] = pickerModeDict[pickerMode!]!
+        let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
         //2.判断类型
         
         var rows =  1
         
-        let  unitSubArray:[UInt] = unitArray[component]
+        let  unitSubArray:[UnitType] = unitArray[component]
         
-        let unit:UInt = unitSubArray.last!
+        let unit:UnitType = unitSubArray.last!
         
         //3.分类型处理
         switch unit {
-        case UnitYear.rawValue:
+        case  .year:
             //判断限制模式
             if  limitedEnable() {
                 //开启了限制返回数据源
@@ -634,7 +638,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 rows  = MaxRangeValue
             }
             break
-        case UnitMonth.rawValue:
+        case  .month:
             //判断限制模式
             if  limitedEnable() {
                 //开启了限制返回数据源
@@ -648,7 +652,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 }
             }
             break
-        case UnitDay.rawValue:
+        case  .day:
             //判断限制模式
             if  limitedEnable() {
                 //开启了限制返回数据源
@@ -657,7 +661,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 //第一组的最后一个是 days
                 if component == 0 {
                     rows = MaxRangeValue
-                    if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{//如果第一个是月份
+                    if unitSubArray.first !=  .year && unitSubArray.last ==  .day{//如果第一个是月份
                         if isLeapYear(year: (currentDateCompnents?.year)!) {
                             rows =  366-1
                         }else{
@@ -670,13 +674,13 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 }
             }
             break
-        case UnitHour.rawValue:
+        case  .hour:
             rows = 24//无论是否开启  数据源 公用
             break
-        case UnitMinute.rawValue:
+        case  .minute:
             rows  = 60
             break
-        case UnitSecond.rawValue:
+        case  .second:
             rows = 60
             break
         default:
@@ -696,22 +700,22 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         var addComps:DateComponents =  DateComponents()
         
         //2.获取当前模式
-        let unitArray:[[UInt]] = pickerModeDict[pickerMode!]!
-        let unitSubArray:[UInt] = unitArray[component]
-        let unit:UInt = unitSubArray.last!
+        let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
+        let unitSubArray:[UnitType] = unitArray[component]
+        let unit:UnitType = unitSubArray.last!
         
         
         //3.判断是否第一组
         if component == 0 {
             //计算偏差
             switch unit {
-            case UnitYear.rawValue:
+            case  .year:
                 addComps.year =  row - sourceCompnentRowDict[component]!
                 break
-            case UnitMonth.rawValue:
+            case  .month:
                 addComps.month =  row - sourceCompnentRowDict[component]!
                 break
-            case UnitDay.rawValue:
+            case  .day:
                 addComps.day =  row - sourceCompnentRowDict[component]!
                 break
             default:
@@ -724,7 +728,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             let tempDate:Date? =  calendar.date(byAdding: addComps, to: date!)
             
             if let tDate:Date = tempDate {
-                let dateComps:DateComponents =  calendar.components(ComUnit, from: tDate)
+                let dateComps:DateComponents =  calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: tDate)
                 
                 return getTitle(comps: dateComps, component:component)
             }else
@@ -733,7 +737,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             }
         }else
         {
-            if unit == UnitMonth.rawValue || unit == UnitDay.rawValue{
+            if unit ==  .month || unit ==  .day{
                 return String(format:"%02zd%@",row+1,unitDescDict[unit]!)
             }else{
                 return String(format:"%02zd%@",row,unitDescDict[unit]!)
@@ -746,18 +750,18 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     
    internal func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         //1.获取当前模式
-        let unitArray:[[UInt]] = pickerModeDict[pickerMode!]!
+        let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
         
         //2.计算全部的个数
         var totalCount:Int =  0
         var totalComponentCount:Int = 0
         
         var tempComponent = 0
-        for unitSubArray:[UInt]  in unitArray{
-            for unit:UInt in unitSubArray {
+        for unitSubArray:[UnitType]  in unitArray{
+            for unit:UnitType in unitSubArray {
                 var add:Int = (1 + ( unitDescDict[unit]?.characters.count)!) 
                 // 年的话，加位
-                if unit == UnitYear.rawValue {
+                if unit ==  .year {
                     add += 1
                 }
                 //计算总长
@@ -817,7 +821,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         }
         
         //1.获取当前模式
-        let unitArray:[[UInt]] = pickerModeDict[pickerMode!]!
+        let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
         
         //2.遍历 每一组最后一个
         var tempComponent:Int = 0
@@ -825,7 +829,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         //用来加减
         var addDateComps:DateComponents =  DateComponents()
         
-        for unitSubArray:[UInt] in unitArray
+        for unitSubArray:[UnitType] in unitArray
         {
             //当前选中
             var currentRow:Int = pickerView.selectedRow(inComponent: tempComponent)
@@ -833,24 +837,24 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 currentRow =  row
             }
             //单位
-            let unit:UInt = unitSubArray.last!
+            let unit:UnitType = unitSubArray.last!
             
             
             //分类型处理
             switch unit {
-            case UnitYear.rawValue:
+            case  .year:
                 addDateComps.year = currentRow - sourceCompnentRowDict[tempComponent]!
                 break
-            case UnitMonth.rawValue:
+            case  .month:
                 addDateComps.month = currentRow - sourceCompnentRowDict[tempComponent]!
                 break
-            case UnitDay.rawValue:
+            case  .day:
                 //如果不是第一组才需要验证
                 if tempComponent != 0 {
                     //验证日期 因为每一月的天数不一样
                     //1.第一步先计算当前步骤选中的年月
-                    let tempDate:Date? = calendar.date(byAdding: addDateComps, to: self.date!, options: NSCalendar.Options.matchLast)
-                    let tempDateComps:DateComponents =  calendar.components(ComUnit, from: tempDate!)
+                    let tempDate:Date? = calendar.date(byAdding: addDateComps, to: self.date!)
+                    let tempDateComps:DateComponents =  calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: tempDate!)
                     tempDateCompnents.year =  tempDateComps.year
                     tempDateCompnents.month =  tempDateComps.month
                     //2.获取天数
@@ -871,13 +875,13 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                 //计算时间
                 addDateComps.day =  currentRow - sourceCompnentRowDict[tempComponent]!
                 break
-            case UnitHour.rawValue:
+            case  .hour:
                 addDateComps.hour = currentRow - sourceCompnentRowDict[tempComponent]!
                 break
-            case UnitMinute.rawValue:
+            case  .minute:
                 addDateComps.minute = currentRow - sourceCompnentRowDict[tempComponent]!
                 break
-            case UnitSecond.rawValue:
+            case  .second:
                 addDateComps.second = currentRow - sourceCompnentRowDict[tempComponent]!
                 break
             default:
@@ -887,7 +891,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             tempComponent += 1
         }
         
-        let date:Date? = calendar.date(byAdding: addDateComps, to: self.date!, options: NSCalendar.Options.matchLast)
+        let date:Date? = calendar.date(byAdding: addDateComps, to: self.date!)
         if let d =  date {
 
             //标记
@@ -941,7 +945,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         tempDateCompnents.month = currentDateCompnents?.month
         
         //1.获取当前模式
-        let unitArray:[[UInt]] = pickerModeDict[pickerMode!]!
+        let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
         
         //2.设置选中
         var comps:DateComponents =  currentDateCompnents!
@@ -949,11 +953,11 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         //3.分类型处理
         var component:Int =  0
         var tempRow:Int = 0
-        for unitSubArray:[UInt] in unitArray{
-            let unit:UInt =  unitSubArray.last!
+        for unitSubArray:[UnitType] in unitArray{
+            let unit:UnitType =  unitSubArray.last!
             
             switch unit {
-                case UnitYear.rawValue:
+                case  .year:
                     //判断限制模式
                     if  limitedEnable() {
                         //开启了限制返回数据源
@@ -963,7 +967,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                             tempRow =  currentIndex!
                     }
                     break
-                case UnitMonth.rawValue:
+                case  .month:
                     //判断限制模式
                     if  limitedEnable() {
                         //开启了限制返回数据源
@@ -979,14 +983,14 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         }
                     }
                     break
-                case UnitDay.rawValue:
+                case  .day:
                     //判断限制模式
                     if  limitedEnable() {
                         //开启了限制返回数据源
                         tempRow = selectedRowInComponentForLimited(component: component, unit: unit)
                     }else{
                         if component == 0{
-                            if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue {//如果第一个是月份 即不是年
+                            if unitSubArray.first !=  .year && unitSubArray.last ==  .day {//如果第一个是月份 即不是年
                                 if isLeapYear(year: (currentDateCompnents?.year)!) {
                                     //第一组的最后一个是 Day
                                     tempRow = (366-1)/2-1
@@ -1005,7 +1009,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         }
                     }
                     break
-                case UnitHour.rawValue:
+                case  .hour:
                     //判断限制模式
                     if  limitedEnable() {
                         //开启了限制返回数据源
@@ -1015,7 +1019,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         tempRow = comps.hour!
                     }
                 break
-                case UnitMinute.rawValue:
+                case  .minute:
                     //判断限制模式
                     if  limitedEnable() {
                         //开启了限制返回数据源
@@ -1025,7 +1029,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         tempRow = comps.minute!
                     }
                     break
-                case UnitSecond.rawValue:
+                case  .second:
                     //判断限制模式
                     if  limitedEnable() {
                         //开启了限制返回数据源
@@ -1071,28 +1075,28 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         var m_str:String = String()
         
         //1.获取当前模式
-        let unitArray:[[UInt]] = pickerModeDict[pickerMode!]!
-        let subArray:[UInt] = unitArray[component]
+        let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
+        let subArray:[UnitType] = unitArray[component]
         
-        for unit:UInt in subArray{
+        for unit:UnitType in subArray{
             //分类型处理
             switch unit {
-            case UnitYear.rawValue:
+            case  .year:
                 m_str.append(String(format: "%04zd%@", comps.year!,unitDescDict[unit]!))
                 break
-            case UnitMonth.rawValue:
+            case  .month:
                 m_str.append(String(format: "%02zd%@", comps.month!,unitDescDict[unit]!))
                 break
-            case UnitDay.rawValue:
+            case  .day:
                 m_str.append(String(format: "%02zd%@", comps.day!,unitDescDict[unit]!))
                 break
-            case UnitHour.rawValue:
+            case  .hour:
                 m_str.append(String(format: "%02zd%@", comps.hour!,unitDescDict[unit]!))
                 break
-            case UnitMinute.rawValue:
+            case  .minute:
                 m_str.append(String(format: "%02zd%@", comps.minute!,unitDescDict[unit]!))
                 break
-            case UnitSecond.rawValue:
+            case  .second:
                 m_str.append(String(format: "%02zd%@", comps.second!,unitDescDict[unit]!))
                 break
             default:
@@ -1112,8 +1116,8 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         //如果未开启
         if(!enableLimited!)
         {
-            let unitSubArray:[UInt] = (pickerModeDict[pickerMode!]?.first!)!
-            if unitSubArray.first != UnitYear.rawValue && unitSubArray.last == UnitDay.rawValue{
+            let unitSubArray:[UnitType] = (pickerModeDict[pickerMode!]?.first!)!
+            if unitSubArray.first !=  .year && unitSubArray.last ==  .day{
                return true
             }
         }
@@ -1123,7 +1127,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     //限制情况下的 数据源
-    internal func numberOfRowsInComponetForLimited(component:Int,unit:UInt) -> Int {
+    internal func numberOfRowsInComponetForLimited(component:Int,unit:UnitType) -> Int {
             //当前情况下表示第一个
             let minD:Date? =  minDate
             //当前情况下表示第一个
@@ -1133,17 +1137,17 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
 
             //分类型处理
             switch unit {
-                case UnitYear.rawValue:
+                case  .year:
                     if  minD != nil && maxD != nil {//都有值
-                        numberOfRows =  calendar.components(UnitYear, from: getDateRemoveStopLastUnit(date: minD!, lastUnit:UnitYear ,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:UnitYear,isFromDate: false), options: NSCalendar.Options.matchLast).year!+1
+                        numberOfRows =  calendar.dateComponents([.year], from: getDateRemoveStopLastUnit(date: minD!, lastUnit: .year ,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: .year,isFromDate: false)).year!+1
                     }else{
                         numberOfRows =  MaxRangeValue
                     }
                     break
-                case UnitMonth.rawValue:
+                case  .month:
                     if component == 0 {
                         if  minD != nil && maxD != nil {//都有值
-                             numberOfRows =  calendar.components(UnitMonth, from: getDateRemoveStopLastUnit(date: minD!, lastUnit:UnitYear,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:UnitYear,isFromDate: false), options: NSCalendar.Options.matchLast).month!
+                             numberOfRows =  calendar.dateComponents([.month], from: getDateRemoveStopLastUnit(date: minD!, lastUnit: .year,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: .year,isFromDate: false)).month!
                         }else{
                              numberOfRows = MaxRangeValue
                         }
@@ -1152,10 +1156,10 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         numberOfRows = 12
                     }
                     break
-                case UnitDay.rawValue:
+                case  .day:
                     if component == 0 {
                             if  minD != nil && maxD != nil {//都有值
-                                    numberOfRows =  calendar.components(UnitDay, from: getDateRemoveStopLastUnit(date: minD!, lastUnit:UnitDay,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:UnitDay,isFromDate: false), options: NSCalendar.Options.matchLast).day!+1
+                                    numberOfRows =  calendar.dateComponents([.day], from: getDateRemoveStopLastUnit(date: minD!, lastUnit: .day,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: .day,isFromDate: false)).day!+1
                             }else if minD == nil && maxD == nil {
                                 if  isLeapYear(year: (self.currentDateCompnents?.year!)!) {
                                     numberOfRows = 366-1
@@ -1164,7 +1168,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                                     numberOfRows = 365-1
                                 }
                             }else if minD != nil{//只有最小日期
-                                let comps:DateComponents = calendar.components(ComUnit, from: minD!)
+                                let comps:DateComponents = calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: minD!)
                                 if  isLeapYear(year: (comps.year!)) {
                                     numberOfRows = 366-1
                                 }else
@@ -1172,7 +1176,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                                     numberOfRows = 365-1
                                 }
                             }else if maxD != nil{
-                                let comps:DateComponents = calendar.components(ComUnit, from: maxD!)
+                                let comps:DateComponents = calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: maxD!)
                                 if  isLeapYear(year: (comps.year!)) {
                                     numberOfRows = 366
                                 }else
@@ -1185,13 +1189,13 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                         numberOfRows = numberOfDaysInMonth(year:tempDateCompnents.year!, month: tempDateCompnents.month!)
                     }
                     break
-                case UnitHour.rawValue:
+                case  .hour:
                     numberOfRows = 24
                     break
-                case UnitMinute.rawValue:
+                case  .minute:
                     numberOfRows = 60
                     break
-                case UnitSecond.rawValue:
+                case  .second:
                     numberOfRows = 60
                     break
                 default:
@@ -1202,7 +1206,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     }
  
     //选中row
-    internal func  selectedRowInComponentForLimited(component:Int,unit:UInt) -> Int {
+    internal func  selectedRowInComponentForLimited(component:Int,unit:UnitType) -> Int {
         
         //当前情况下表示第一个
         let minD:Date? =  minDate
@@ -1213,25 +1217,25 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         
         //分类型处理
         switch unit {
-        case UnitYear.rawValue:
+        case  .year:
             if  minD != nil{//都有值
-                selectedRows =  calendar.components(UnitYear, from: getDateRemoveStopLastUnit(date: minD!, lastUnit: UnitYear,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitYear,isFromDate: false), options: NSCalendar.Options.matchLast).year!
+                selectedRows =  calendar.dateComponents( [.year], from: getDateRemoveStopLastUnit(date: minD!, lastUnit:  .year,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit:  .year,isFromDate: false)).year!
             }else if maxD != nil {
-                selectedRows = MaxRangeValue - calendar.components(UnitYear, from: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitYear,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: UnitYear,isFromDate: false), options: NSCalendar.Options.matchLast).year!
+                selectedRows = MaxRangeValue - calendar.dateComponents([.year], from: getDateRemoveStopLastUnit(date: date!, lastUnit:  .year,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:  .year,isFromDate: false)).year!
             }else if minD != nil && maxD != nil{
-                selectedRows =  calendar.components(UnitYear, from: getDateRemoveStopLastUnit(date: minD!, lastUnit: UnitYear,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitYear,isFromDate: false), options: NSCalendar.Options.matchLast).year!
+                selectedRows =  calendar.dateComponents([.year], from: getDateRemoveStopLastUnit(date: minD!, lastUnit:  .year,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit:  .year,isFromDate: false)).year!
             }
             break
-        case UnitMonth.rawValue:
+        case  .month:
                 if component == 0 {
                      if  minD != nil && maxD != nil  {//都有值
-                       selectedRows = calendar.components(UnitMonth, from: getDateRemoveStopLastUnit(date: minD!, lastUnit: UnitMonth,isFromDate: true), to:getDateRemoveStopLastUnit(date: maxD!, lastUnit: UnitMonth,isFromDate: false), options: NSCalendar.Options.matchLast).month!
+                       selectedRows = calendar.dateComponents([.month], from: getDateRemoveStopLastUnit(date: minD!, lastUnit:  .month,isFromDate: true), to:getDateRemoveStopLastUnit(date: maxD!, lastUnit:  .month,isFromDate: false)).month!
                      }else if minD == nil && maxD == nil {
                         selectedRows = currentIndex!
                      }else if minD != nil{
-                        selectedRows = calendar.components(UnitMonth, from: getDateRemoveStopLastUnit(date: minD!, lastUnit: UnitMonth,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: UnitMonth,isFromDate: false), options: NSCalendar.Options.matchLast).month!
+                        selectedRows = calendar.dateComponents([.month], from: getDateRemoveStopLastUnit(date: minD!, lastUnit:  .month,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:  .month,isFromDate: false)).month!
                      }else if maxD != nil{
-                         selectedRows = MaxRangeValue - calendar.components(UnitMonth, from: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitMonth,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: UnitMonth,isFromDate: false), options: NSCalendar.Options.matchLast).month!
+                         selectedRows = MaxRangeValue - calendar.dateComponents([.month], from: getDateRemoveStopLastUnit(date: date!, lastUnit:  .month,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:  .month,isFromDate: false)).month!
                      }
                 }else
                 {
@@ -1242,10 +1246,10 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                     }
                 }
             break
-        case UnitDay.rawValue:
+        case  .day:
                  if component == 0 {
                         if  minD != nil && maxD != nil {//都有值
-                            selectedRows =  calendar.components(UnitDay, from: getDateRemoveStopLastUnit(date: minD!, lastUnit: UnitDay,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitDay,isFromDate: false), options: NSCalendar.Options.matchLast).day!
+                            selectedRows =  calendar.dateComponents([.day], from: getDateRemoveStopLastUnit(date: minD!, lastUnit:  .day,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit: .day,isFromDate: false)).day!
                         }else if minD == nil && maxD == nil {
                             if  isLeapYear(year: (self.currentDateCompnents?.year!)!) {
                                 selectedRows =  (366-1)/2
@@ -1254,16 +1258,16 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                                 selectedRows = (365-1)/2
                             }
                         }else if minD != nil{
-                            selectedRows = calendar.components(UnitDay, from: getDateRemoveStopLastUnit(date: minD!, lastUnit: UnitDay,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitDay,isFromDate: false), options: NSCalendar.Options.matchLast).day!
+                            selectedRows = calendar.dateComponents( [.day], from: getDateRemoveStopLastUnit(date: minD!, lastUnit:  .day,isFromDate: true), to: getDateRemoveStopLastUnit(date: date!, lastUnit:  .day,isFromDate: false)).day!
  
                         }else if maxD != nil{
-                            let comps:DateComponents = calendar.components(ComUnit, from: maxD!)
+                            let comps:DateComponents = calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: maxD!)
                             if  isLeapYear(year: (comps.year!)) {
  
-                                selectedRows = 366 - 1 - calendar.components(UnitDay, from: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitDay,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: UnitDay,isFromDate: false), options:Option).day!
+                                selectedRows = 366 - 1 - calendar.dateComponents( [.day], from: getDateRemoveStopLastUnit(date: date!, lastUnit:  .day,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit:  .day,isFromDate: false)).day!
                             }else
                             {
-                                selectedRows = 365 - 1 - calendar.components(UnitDay, from: getDateRemoveStopLastUnit(date: date!, lastUnit: UnitDay,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: UnitDay,isFromDate: false), options:Option).day!
+                                selectedRows = 365 - 1 - calendar.dateComponents([.day], from: getDateRemoveStopLastUnit(date: date!, lastUnit:  .day,isFromDate: true), to: getDateRemoveStopLastUnit(date: maxD!, lastUnit: .day,isFromDate: false)).day!
                             }
                         }
                 }else
@@ -1271,13 +1275,13 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
                     selectedRows = (currentDateCompnents?.day!)!-1//索引
                 }
             break
-        case UnitHour.rawValue:
+        case  .hour:
             selectedRows = (currentDateCompnents?.hour!)!
             break
-        case UnitMinute.rawValue:
+        case  .minute:
             selectedRows = (currentDateCompnents?.minute!)!
             break
-        case UnitSecond.rawValue:
+        case  .second:
             selectedRows = (currentDateCompnents?.second!)!
             break
         default:
@@ -1299,19 +1303,20 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             addComps.year = -1
             addComps.day = 1
         }
+        
         //日期
-        let lastDate:Date = calendar.date(byAdding: addComps, to:date, options: NSCalendar.Options.matchLast)!
+        let lastDate:Date = calendar.date(byAdding: addComps, to:date)!
         
         return  lastDate
     }
     
     
     //去掉多余的日期部分，保证计算日期的差的准确度
-    func  getDateRemoveStopLastUnit(date:Date,lastUnit:NSCalendar.Unit,isFromDate:Bool) -> Date {
+    func  getDateRemoveStopLastUnit(date:Date,lastUnit:UnitType,isFromDate:Bool) -> Date {
         //初始化
-        let unitArray:[UInt] = [UnitYear.rawValue,UnitMonth.rawValue,UnitDay.rawValue,UnitHour.rawValue,UnitMinute.rawValue,UnitSecond.rawValue]
+        let unitArray:[UnitType] = [ .year, .month, .day, .hour, .minute, .second]
         
-        let dateComps:DateComponents = self.calendar.components(ComUnit, from: date)
+        let dateComps:DateComponents = self.calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: date)
         
         
         var flag:Bool = true
@@ -1320,69 +1325,69 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         //遍历
         for unitRawValue in unitArray{
             switch unitRawValue {
-            case UnitYear.rawValue:
+            case  .year:
                 if flag {
                     addDateComps.year = 0 
                 }else{
                     addDateComps.year = -(dateComps.year)!
                 }
                 //判断
-                if unitRawValue == lastUnit.rawValue{
+                if unitRawValue == lastUnit{
                     flag = false
                 }
                 break
-            case UnitMonth.rawValue:
+            case  .month:
                 if flag {
                     addDateComps.month = 0
                 }else{
                     addDateComps.month = -(dateComps.month)!
                 }
                 //判断
-                if unitRawValue == lastUnit.rawValue{
+                if unitRawValue == lastUnit{
                     flag = false
                 }
                 break
-            case UnitDay.rawValue:
+            case  .day:
                 if flag {
                     addDateComps.day = 0
                 }else{
                     addDateComps.day = -(dateComps.day)!
                 }
                 //判断
-                if unitRawValue == lastUnit.rawValue{
+                if unitRawValue == lastUnit{
                     flag = false
                 }
                 break
-            case UnitHour.rawValue:
+            case  .hour:
                 if flag {
                     addDateComps.hour = 0
                 }else{
                     addDateComps.hour = -(dateComps.hour)!
                 }
                 //判断
-                if unitRawValue == lastUnit.rawValue{
+                if unitRawValue == lastUnit{
                     flag = false
                 }
                 break
-            case UnitMinute.rawValue:
+            case  .minute:
                 if flag {
                     addDateComps.minute = 0
                 }else{
                     addDateComps.minute = -(dateComps.minute)!
                 }
                 //判断
-                if unitRawValue == lastUnit.rawValue{
+                if unitRawValue == lastUnit{
                     flag = false
                 }
                 break
-            case UnitSecond.rawValue:
+            case  .second:
                 if flag {
                     addDateComps.second = 0
                 }else{
                     addDateComps.second = -(dateComps.second)!
                 }
                 //判断
-                if unitRawValue == lastUnit.rawValue{
+                if unitRawValue == lastUnit{
                     flag = false
                 }
                 break
@@ -1395,7 +1400,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
             addDateComps.second = 1
         }
             
-        let lastDate:Date = self.calendar.date(byAdding: addDateComps, to: date, options: NSCalendar.Options.matchLast)!
+        let lastDate:Date = self.calendar.date(byAdding: addDateComps, to: date)!
         
         return lastDate
     }
