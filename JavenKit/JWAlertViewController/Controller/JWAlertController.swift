@@ -15,7 +15,7 @@ public enum JWAlertControllerStyle:Int{
 }
 
 
-class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate{
+public class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate{
     
     private var preferredStyle:JWAlertControllerStyle = JWAlertControllerStyle.actionSheet
     
@@ -141,7 +141,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
     
     
     //加载
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.clear
@@ -271,7 +271,7 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
         
     }
     
-    override func viewWillLayoutSubviews() {
+    override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         
@@ -531,14 +531,14 @@ class JWAlertController: UIViewController ,UIViewControllerTransitioningDelegate
     
     
     
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.modalPresentationStyle  =  .custom
         let presentTrasition:JWAlertPresentTransitioning = JWAlertPresentTransitioning()
         presentTrasition.preferredStyle = self.preferredStyle
         return presentTrasition
     }
     
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.modalPresentationStyle  =  .custom
         let dismissTrasition:JWAlertDismissTransitioning = JWAlertDismissTransitioning()
         dismissTrasition.preferredStyle = self.preferredStyle

@@ -14,11 +14,11 @@ public enum JWAlertActionStyle:Int{
     case destructive
 }
 
-class JWAlertAction: NSObject {
+public class JWAlertAction: NSObject {
     
  
     
-    typealias JWActionClosure = (JWAlertAction)->Void
+   public typealias JWActionClosure = (JWAlertAction)->Void
     
 
     //初始化

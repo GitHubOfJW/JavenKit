@@ -14,7 +14,7 @@ class JWAlertPresentTransitioning: NSObject,UIViewControllerAnimatedTransitionin
     var preferredStyle:JWAlertControllerStyle = JWAlertControllerStyle.alert
     
     //返回动画之行的时间
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+      func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         if  self.preferredStyle == .alert {
             return 0.25
         }else if self.preferredStyle == .actionSheet{
@@ -24,7 +24,7 @@ class JWAlertPresentTransitioning: NSObject,UIViewControllerAnimatedTransitionin
     }
     
     //执行动画
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+      func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         //动画容器
         let containerView = transitionContext.containerView
@@ -88,7 +88,7 @@ class JWAlertPresentTransitioning: NSObject,UIViewControllerAnimatedTransitionin
         
     }
     
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+      func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if let value = anim.value(forKeyPath: "transitionContext"){
             if let transitionContext:UIViewControllerContextTransitioning = value as? UIViewControllerContextTransitioning{
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
@@ -96,7 +96,7 @@ class JWAlertPresentTransitioning: NSObject,UIViewControllerAnimatedTransitionin
         }
     }
     
-    func animationEnded(_ transitionCompleted: Bool) {
+      func animationEnded(_ transitionCompleted: Bool) {
         
     }
     

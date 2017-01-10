@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JWWebViewProgressView: UIView,CAAnimationDelegate{
+public class JWWebViewProgressView: UIView,CAAnimationDelegate{
 
     let maskLayer:CALayer = CALayer()
     
@@ -61,7 +61,7 @@ class JWWebViewProgressView: UIView,CAAnimationDelegate{
          layer.addSublayer(progressLayer)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -89,7 +89,7 @@ class JWWebViewProgressView: UIView,CAAnimationDelegate{
     
      
     
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         //加载中 and 未隐藏
         if progress! < CGFloat(1.0) && !isHidden
         {
@@ -98,7 +98,7 @@ class JWWebViewProgressView: UIView,CAAnimationDelegate{
     }
     
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         progressLayer.frame = bounds

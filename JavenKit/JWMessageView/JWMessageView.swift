@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JWMessageView: UIView,UIDynamicAnimatorDelegate {
+public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
     
     var messageCount:Int = 0 {
         
@@ -307,7 +307,7 @@ class JWMessageView: UIView,UIDynamicAnimatorDelegate {
     
     
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         
@@ -328,7 +328,7 @@ class JWMessageView: UIView,UIDynamicAnimatorDelegate {
     }
     
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

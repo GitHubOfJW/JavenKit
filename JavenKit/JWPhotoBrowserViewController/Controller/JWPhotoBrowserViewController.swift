@@ -8,10 +8,12 @@
 
 import UIKit
  
-let PBReuseIdentifier:String = "reuseIdentifier"
 
-class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerTransitioningDelegate{
+public class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerTransitioningDelegate{
 
+    let PBReuseIdentifier:String = "reuseIdentifier"
+    
+    
     //如果是图片直接调用  不是则下载完成后调用
     typealias JWPhotoCompletionClosure = (UIImage?)->Void
     
@@ -115,7 +117,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
     
     
     var operationView:UIImageView = UIImageView()
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
 //        let r = CGFloat(arc4random_uniform(255))/255.0
@@ -136,18 +138,18 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
     
 
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    override public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoSource.count
     }
 
     
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         //1.获取cell
         let cell:JWPhotoBrowserCell = collectionView.dequeueReusableCell(withReuseIdentifier: PBReuseIdentifier, for: indexPath) as! JWPhotoBrowserCell
@@ -174,7 +176,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
     
     
     
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    override public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         //1.获取cell
         let cell:JWPhotoBrowserCell = cell as! JWPhotoBrowserCell
@@ -183,11 +185,11 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
         cell.handler()
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("选中了：\(indexPath)")
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let page =  scrollView.contentOffset.x / scrollView.bounds.width
         
@@ -200,12 +202,12 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
         IndexPromptLabel.attributedText = m_attr
     }
     
-    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    override public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         IndexPromptLabel.isHidden =  false
          self.IndexPromptLabel.tag = 0
     }
     
-    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    override public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         if IndexPromptLabel.tag == 0{
             IndexPromptLabel.tag = 1
@@ -229,7 +231,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
     }
     
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -244,7 +246,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
     var presentTransitioning:JWPhotoPresentBrowserTransitioning = JWPhotoPresentBrowserTransitioning()
     
     
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         if self.interactionTransitioning.isStart{
             return dismissTransitioning
@@ -253,7 +255,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
         }
     }
     
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
             return presentTransitioning
     }
     
@@ -266,7 +268,7 @@ class JWPhotoBrowserViewController: UICollectionViewController,UIViewControllerT
 //     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController?
  
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         interactionTransitioning.addPopInteractiveTransition(browserViewController: self)

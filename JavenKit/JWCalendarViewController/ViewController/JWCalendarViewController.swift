@@ -29,7 +29,7 @@ let dayDisabledTextColor:UIColor = UIColor.white
 
 
 //协议
-protocol JWCalendarViewControllerDelegate:NSObjectProtocol {
+public protocol JWCalendarViewControllerDelegate:NSObjectProtocol {
     
     //点击了确定
     func calendarViewController(calendarViewController:JWCalendarViewController,clickConfirm daySelectdItems:[(Date,DateComponents,DayItemState)],and dayDisabledItems:[(Date,DateComponents,DayItemState)]);
@@ -39,7 +39,7 @@ protocol JWCalendarViewControllerDelegate:NSObjectProtocol {
 }
 
 
-class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICollectionViewDataSource{
+public class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICollectionViewDataSource{
 
     //是否开启网格模式
     var enableGrid:Bool = true{
@@ -359,7 +359,7 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     
     let headerView:JWCalendarHeaderView = JWCalendarHeaderView()
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         if !self.singleSelected{
@@ -411,7 +411,7 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     }
 
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         if let maxDate = self.maxDate{
              let monthOffset:Int = calendar.dateComponents([.month], from:self.getDateRemoveStopLastUnit(date:self.minDate, lastUnit: .month, isFromDate: true), to:self.getDateRemoveStopLastUnit(date:maxDate, lastUnit: .month, isFromDate: false)).month!+1
             
@@ -422,7 +422,7 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     }
 
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         let tempDate:Date =  calendar.date(byAdding: Calendar.Component.month, value:section-1, to:self.minDate)!
         
@@ -439,7 +439,7 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     
     
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell:JWCalendarViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! JWCalendarViewCell
       
@@ -497,7 +497,7 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         if sectionCompsArray.keys.contains(indexPath.section){
             let calendarCell:JWCalendarViewCell = cell as! JWCalendarViewCell
@@ -525,7 +525,7 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     }
     
     //选中了单天
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if sectionCompsArray.keys.contains(indexPath.section){
             if var comps =  sectionCompsArray[indexPath.section]{
@@ -554,7 +554,7 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     
     
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let headerView:JWCalendarSectionView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath) as! JWCalendarSectionView
         
@@ -624,23 +624,23 @@ class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICol
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+    public func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         return true
     }
   
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+    public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         return false
     }
 
-    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+    public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         return false
     }
 
-    func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+    public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
     }
     

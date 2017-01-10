@@ -38,17 +38,9 @@ public enum JWDatePickerMode:Int{
 }
 
 
-//Unit
-//let  .year:NSCalendar.Unit = [.year]
-//let  .month:NSCalendar.Unit = [.month]
-//let  .day:NSCalendar.Unit = [.day]
-//let  .hour:NSCalendar.Unit = [.hour]
-//let  .minute:NSCalendar.Unit = [.minute]
-//let  .second:NSCalendar.Unit = [.second]
-//let Option:NSCalendar.Options = NSCalendar.Options(rawValue: 0)
 
 
-class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
+public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     
     
     //MARK:公有方法 和 公有属性
@@ -599,13 +591,14 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public
+    init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
     //MARK:pickerView代理和数据源
-   internal func numberOfComponents(in pickerView: UIPickerView) -> Int {
+   public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
         //1.获取当前模式
         let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
@@ -615,7 +608,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     
-   internal func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+   public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         //1.获取当前模式
         let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
         //2.判断类型
@@ -748,7 +741,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     
     
     
-   internal func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+   public func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         //1.获取当前模式
         let unitArray:[[UnitType]] = pickerModeDict[pickerMode!]!
         
@@ -787,13 +780,13 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     //返回选项高度
-    internal func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return pickerView.bounds.height/5
     }
 
     
     //返回label
-    internal func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         let title:String = pickerViewTitle(forRow: row, forComponent: component)
         
@@ -813,7 +806,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     
     
     //选择停止
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         //优化掉
         if self.currentOperationComponent != component{
@@ -1058,7 +1051,7 @@ class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     //布局
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
 
         let pickerX:CGFloat = 0

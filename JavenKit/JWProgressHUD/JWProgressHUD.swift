@@ -16,6 +16,7 @@ public enum JWProgressHUDType:Int{
     case dismiss//隐藏
 }
 
+public
 class JWProgressHUD: UIView,CAAnimationDelegate {
     
     private let duration:TimeInterval = 0.25
@@ -75,7 +76,7 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
 //        self.isHidden = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -502,12 +503,12 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
     }
     
     
-    internal func animationDidStart(_ anim: CAAnimation) {
+    public func animationDidStart(_ anim: CAAnimation) {
         self.isHidden = false
     }
     
     
-    internal func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if  self.currentProgressType == .dismiss {
             self.isHidden = true
             if let closure = self.complectionClosure{
@@ -519,7 +520,7 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
     }
     
     //布局
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         let x:CGFloat = 0

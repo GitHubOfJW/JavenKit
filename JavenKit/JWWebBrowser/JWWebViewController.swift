@@ -8,11 +8,8 @@
 import WebKit
 import UIKit
 
-let bottomBarHeight:CGFloat = 0
 
-class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler {
-    
-    
+public class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler {
     
     
     var urlString:String?
@@ -136,7 +133,7 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
         config.userContentController = userContent
         
        
-        let webView:WKWebView =  WKWebView(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - bottomBarHeight), configuration: config)
+        let webView:WKWebView =  WKWebView(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), configuration: config)
         webView.allowsBackForwardNavigationGestures  = true
         
         return webView
@@ -147,7 +144,7 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     
     private var addObserverFlag:Bool = false
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
    
         
@@ -189,18 +186,18 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     }
     
     
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         view.addSubview(progressView)
         
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     
         //进度
         if (keyPath?.compare(estimatedProgressKey) == ComparisonResult.orderedSame) {
@@ -226,7 +223,7 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     //MARK:UI代理
     
     //网页中在新窗口弹出的交互功能  target = __bank
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         
         if let frameInfo = navigationAction.targetFrame {
             if frameInfo.isMainFrame {
@@ -240,7 +237,7 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     }
     
     //弹出 alert
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         
         
         let alertController:JWAlertController = JWAlertController(title: "提示", message: message, preferredStyle: JWAlertControllerStyle.alert)
@@ -259,7 +256,7 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     }
     
     //弹出  取消 确定 面板
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         
         
         
@@ -284,7 +281,7 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     }
     
     //js 弹出输入框
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+    public func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         
        
          let alertController:UIAlertController = UIAlertController(title: "", message:prompt , preferredStyle: UIAlertControllerStyle.alert)
@@ -319,13 +316,13 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     
     
     // 内容处理中断
-    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         
     }
     
     
     //请求准备发起  决定是否发起
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         //print("decidePolicyFor navigationAction")
         
         
@@ -344,7 +341,7 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     
     
     //请求发起收到响应 决定是否跳转
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         //print("decidePolicyFor")
         decisionHandler(WKNavigationResponsePolicy.allow)
     }
@@ -352,43 +349,43 @@ class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WK
     
     
     //导航失败
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         //刷新状态
         //print("导航失败")
     }
     
     //请求完成
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         navigationItem.title =  webView.title
          //刷新状态
         //print("didFinish")
     }
     
     //开始返回内容
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         //print("didCommit")
     }
     
     //页面开始加载
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         //print("didStartProvisionalNavigation")
     }
     
     //收到重定向
-    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         //print("重定向")
     }
     
     
     //页面加载失败
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         
         //print("didFailProvisionalNavigation")
     }
   
     
     //https 授权
-    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         //按默认处理
         completionHandler(URLSession.AuthChallengeDisposition.performDefaultHandling, nil)
     }

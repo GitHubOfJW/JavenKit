@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
+public class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     
     typealias ConfirmDateClosure = (Int) -> ()
     
@@ -116,13 +116,14 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func
+        numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if let closure =  self.numberClosure{
             if self.titleClosure != nil{
              return closure()
@@ -134,13 +135,13 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     //返回选项高度
-    internal func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return pickerView.bounds.height/5
     }
     
     
     //返回label
-    internal func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         let title:String =  titleClosure!(row)
         
@@ -160,7 +161,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     private var currentIndex:Int = 0
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         currentIndex = row
     }
 
@@ -177,7 +178,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
         
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
           
         
@@ -214,7 +215,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -222,7 +223,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     /**
      *  此方法当 自定键盘移动到窗口上调用
      */
-    override func didMoveToWindow() {
+    override public func didMoveToWindow() {
         super.didMoveToWindow()
         if isRemove == false {
             let window:UIWindow = UIApplication.shared.keyWindow!
@@ -239,7 +240,7 @@ class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     /**
      *  移除时 将蒙板一并移除
      */
-    override func removeFromSuperview() {
+    override public func removeFromSuperview() {
         isRemove = true
         cover.removeFromSuperview()
         

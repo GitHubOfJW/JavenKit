@@ -1,3 +1,4 @@
+
 //
 //  JWDatePickerKeyBoardView.swift
 //  CarServer
@@ -8,7 +9,7 @@
 
 import UIKit
 
-class JWDatePickerKeyBoardView: UIView {
+public class JWDatePickerKeyBoardView: UIView {
     
     typealias ConfirmDateClosure = (Date) -> ()
     
@@ -123,7 +124,7 @@ class JWDatePickerKeyBoardView: UIView {
         
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
          
         //titleView
@@ -162,7 +163,7 @@ class JWDatePickerKeyBoardView: UIView {
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -170,7 +171,7 @@ class JWDatePickerKeyBoardView: UIView {
     /**
      *  此方法当 自定键盘移动到窗口上调用
      */
-    override func didMoveToWindow() {
+    override public func didMoveToWindow() {
         super.didMoveToWindow()
         if isRemove == false {
             let window:UIWindow = UIApplication.shared.keyWindow!
@@ -187,7 +188,7 @@ class JWDatePickerKeyBoardView: UIView {
     /**
      *  移除时 将蒙板一并移除
      */
-    override func removeFromSuperview() {
+    override public func removeFromSuperview() {
         isRemove = true
         cover.removeFromSuperview()
         

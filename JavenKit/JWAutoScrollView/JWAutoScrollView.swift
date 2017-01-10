@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol JWAutoScrollViewDelegate:NSObjectProtocol {
+public protocol JWAutoScrollViewDelegate:NSObjectProtocol {
     
     //返回总个数
     func autoScrollViewNumberOfPage() -> Int
@@ -21,7 +21,7 @@ protocol JWAutoScrollViewDelegate:NSObjectProtocol {
 }
 
 
-class JWAutoScrollView: UIView,UIScrollViewDelegate {
+public class JWAutoScrollView: UIView,UIScrollViewDelegate {
     
     var bottomPrompt:String?{
         willSet{
@@ -135,7 +135,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     
     //MARK:代理
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if pageCount<=1 {
             return
@@ -156,13 +156,13 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     
     
     //开始拖拽
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         bgScrollView?.isPagingEnabled = true
         timerEnd()
     }
     
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         timerStart()
     }
     
@@ -357,7 +357,7 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     }
     
     //停止滚动
-    internal func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         
         isScrolling = false
         
@@ -377,12 +377,12 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     
     
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         let bgScX:CGFloat = 0
@@ -415,19 +415,20 @@ class JWAutoScrollView: UIView,UIScrollViewDelegate {
     }
     
     
-    override func removeFromSuperview() {
+    override public func removeFromSuperview() {
         super.removeFromSuperview()
         timerEnd()
     }
     
+    
 }
 
-class JWAutoScrollViewButton: UIButton {
-    override func titleRect(forContentRect contentRect: CGRect) -> CGRect {
+public class JWAutoScrollViewButton: UIButton {
+    override public func titleRect(forContentRect contentRect: CGRect) -> CGRect {
         return contentRect
     }
     
-    override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
+    override public func imageRect(forContentRect contentRect: CGRect) -> CGRect {
         return contentRect
     }
 }
