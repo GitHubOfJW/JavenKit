@@ -64,7 +64,7 @@ public class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewData
     //pickerView
     public let pickerView:UIPickerView = UIPickerView()
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = UIColor.white

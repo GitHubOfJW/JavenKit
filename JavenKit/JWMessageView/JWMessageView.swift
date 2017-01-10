@@ -61,7 +61,7 @@ public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
     
     
     //初始化
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         //消息的layer

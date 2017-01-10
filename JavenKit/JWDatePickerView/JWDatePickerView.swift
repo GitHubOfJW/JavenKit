@@ -575,7 +575,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     }()
     
     //初始化
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(pickerView)

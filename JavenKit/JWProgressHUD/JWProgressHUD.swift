@@ -44,8 +44,7 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
     
    
    
-    
-     override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         //背景
@@ -537,4 +536,4 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
     
 }
 
-let JavenHUD:JWProgressHUD = JWProgressHUD()
+public let JavenHUD:JWProgressHUD = JWProgressHUD()

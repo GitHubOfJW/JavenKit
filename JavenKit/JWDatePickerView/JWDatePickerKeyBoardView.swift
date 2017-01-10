@@ -15,7 +15,7 @@ public class JWDatePickerKeyBoardView: UIView {
     
    public var didConfirmDateClosure:ConfirmDateClosure?
     
-    
+   
    private var isRemove:Bool =  false
     
    public var font:UIFont?{
@@ -62,7 +62,7 @@ public class JWDatePickerKeyBoardView: UIView {
     //pickerView
     public let pickerView:JWDatePickerView = JWDatePickerView()
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = UIColor.white
