@@ -47,7 +47,7 @@ class JWCalendarSectionView: UICollectionReusableView {
     
 
     //布局
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
 
         bgView.frame = CGRect(x: self.sectionInset.left, y: self.sectionInset.top, width: self.bounds.width - self.sectionInset.left - self.sectionInset.right, height: self.bounds.height - self.sectionInset.top - self.sectionInset.bottom)
@@ -57,7 +57,7 @@ class JWCalendarSectionView: UICollectionReusableView {
     }
     
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

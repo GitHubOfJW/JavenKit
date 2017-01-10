@@ -11,14 +11,14 @@ import UIKit
 
 public class JWDatePickerKeyBoardView: UIView {
     
-    typealias ConfirmDateClosure = (Date) -> ()
+   public typealias ConfirmDateClosure = (Date) -> ()
     
-    var didConfirmDateClosure:ConfirmDateClosure?
+   public var didConfirmDateClosure:ConfirmDateClosure?
     
     
-    var isRemove:Bool =  false
+   private var isRemove:Bool =  false
     
-    var font:UIFont?{
+   public var font:UIFont?{
         willSet{
             if let f = font {
                 titleLabel?.font = f
@@ -30,7 +30,7 @@ public class JWDatePickerKeyBoardView: UIView {
     }
     
     
-    var title:String?{
+   public var title:String?{
         willSet{
             if let t  = newValue{
                 titleLabel?.text = t
@@ -60,7 +60,7 @@ public class JWDatePickerKeyBoardView: UIView {
     private var titleView:UIView?
     
     //pickerView
-    let pickerView:JWDatePickerView = JWDatePickerView()
+    public let pickerView:JWDatePickerView = JWDatePickerView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

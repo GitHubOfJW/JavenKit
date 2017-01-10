@@ -99,7 +99,7 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
     private var complectionClosure:(()->Void)?
     
     //展示弹出层
-    func  showMessage(message:String?,type:JWProgressHUDType){
+   public func  showMessage(message:String?,type:JWProgressHUDType){
         
         //展示弹出层
         self.showMessage(message:message,type:type,complectionClosure: {})
@@ -107,7 +107,7 @@ class JWProgressHUD: UIView,CAAnimationDelegate {
         
     
     //展示弹出层
-    func  showMessage(message:String?,type:JWProgressHUDType,complectionClosure:@escaping (()->Void)){
+   public func  showMessage(message:String?,type:JWProgressHUDType,complectionClosure:@escaping (()->Void)){
         
         if self.currentProgressType == type{
             return

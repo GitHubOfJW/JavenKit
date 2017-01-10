@@ -15,11 +15,6 @@ class JWPhotoBrowserCell: UICollectionViewCell,UIScrollViewDelegate{
         
         willSet{
             
-//            let r = CGFloat(arc4random_uniform(255))/255.0
-//            let g = CGFloat(arc4random_uniform(255))/255.0
-//            let b = CGFloat(arc4random_uniform(255))/255.0
-//            self.contentView.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1)
-            
             self.photoImageView.backgroundColor = UIColor.orange
             
             self.setNeedsLayout()

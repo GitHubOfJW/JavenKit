@@ -10,7 +10,7 @@ import UIKit
 
 public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
     
-    var messageCount:Int = 0 {
+   public var messageCount:Int = 0 {
         
         willSet{
             
@@ -44,7 +44,7 @@ public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
     
     let RangeSizeWH:CGFloat = 100
     
-    var messageFont:UIFont = UIFont.systemFont(ofSize: 10)
+    public var messageFont:UIFont = UIFont.systemFont(ofSize: 10)
     
     //消息label
     private var messageButton:UIButton = UIButton()
@@ -77,10 +77,7 @@ public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
         
         messageButton.setBackgroundImage(UIImage(named:"images.bundle/JWMessage"), for: UIControlState.normal)
         messageButton.setBackgroundImage(UIImage(named:"images.bundle/JWMessage"), for: UIControlState.highlighted)
-        
-        //点击按钮
-//        messageButton.addTarget(self, action: #selector(JWMessageView.messageTouchDown(btn:)), for: UIControlEvents.touchDown)
-        
+         
         messageButton.addTarget(self, action: #selector(JWMessageView.messageTouchUpInside(btn:)), for: UIControlEvents.touchUpInside)
         
         
@@ -279,27 +276,7 @@ public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
     
     
     
-//    private var delayFalg:Bool = false
-    //消息点击
-//    func messageTouchDown(btn:UIButton){
-//        delayFalg = true
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute:{
-//            let keyFrameAnim :CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-//            if self.delayFalg{
-//                keyFrameAnim.values = [0,-3,0,3,0]
-//                keyFrameAnim.fillMode = kCAFillModeForwards
-//                keyFrameAnim.isRemovedOnCompletion = false
-//                keyFrameAnim.duration = 0.2
-//                keyFrameAnim.repeatCount = 1000
-//                btn.layer.add(keyFrameAnim, forKey: "ShakeKey")
-//            }
-//        })
-        
-//    }
-    
     func messageTouchUpInside(btn:UIButton){
-//        delayFalg = false
-//        btn.layer.removeAllAnimations()
         messageHanlder(alwaysShow: false)
     }
     

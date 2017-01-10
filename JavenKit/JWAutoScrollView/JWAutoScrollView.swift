@@ -58,7 +58,7 @@ public class JWAutoScrollView: UIView,UIScrollViewDelegate {
     
     private var bottomLabel:UILabel?
     
-    weak var delegate:JWAutoScrollViewDelegate?{
+    public weak var delegate:JWAutoScrollViewDelegate?{
         didSet{
             if self.superview != nil{
                 if  self.delegate != nil{

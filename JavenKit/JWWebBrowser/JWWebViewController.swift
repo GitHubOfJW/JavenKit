@@ -12,15 +12,15 @@ import UIKit
 public class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDelegate,WKScriptMessageHandler {
     
     
-    var urlString:String?
+    public var urlString:String?
     
-    var filePathString:String?
+    public var filePathString:String?
     
     
     
     
     //加载
-    func reload() {
+   public  func reload() {
         if let urlStr = urlString{
             let handlerData = handlerWebViewRequest(urlString: urlStr)
             if  handlerData.0{
@@ -43,7 +43,7 @@ public class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDele
     
     
     //覆盖父类的重新加载
-    func refresh(item: UIBarButtonItem) {
+   public func refresh(item: UIBarButtonItem) {
         //iOS 7
         URLCache.shared.removeAllCachedResponses()
         
@@ -96,7 +96,7 @@ public class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDele
     
     
     
-    var navigationActionClosure:((String)->Bool)?
+    public var navigationActionClosure:((String)->Bool)?
     
     
     private let estimatedProgressKey = "estimatedProgress"
@@ -112,7 +112,7 @@ public class JWWebViewController: UIViewController,WKNavigationDelegate,WKUIDele
     
     
     
-    lazy var webView:WKWebView =  {
+    public lazy var webView:WKWebView =  {
         
         //配置
         let config:WKWebViewConfiguration = WKWebViewConfiguration()

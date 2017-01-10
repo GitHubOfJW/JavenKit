@@ -11,7 +11,7 @@ import UIKit
 
 
 //协议
-protocol JWCalendarViewDelegate: NSObjectProtocol {
+public protocol JWCalendarViewDelegate: NSObjectProtocol {
     
     //天数
     func numberOfDay(in calendarView:JWCalendarView) -> Int
@@ -32,10 +32,10 @@ protocol JWCalendarViewDelegate: NSObjectProtocol {
 
 
 //展示日期的View
-class JWCalendarView: UIView {
+public class JWCalendarView: UIView {
 
     //类型
-    enum DayItemType:Int {
+    public enum DayItemType:Int {
         case normal//普通
         case selected//选中
         case disabled//禁用
@@ -60,13 +60,13 @@ class JWCalendarView: UIView {
         self.backgroundColor = UIColor.white
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
     //绘制
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         super.draw(rect)
         
         if let delegate = self.delegate{

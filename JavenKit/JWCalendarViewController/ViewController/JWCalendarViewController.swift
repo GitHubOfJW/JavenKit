@@ -42,16 +42,16 @@ public protocol JWCalendarViewControllerDelegate:NSObjectProtocol {
 public class JWCalendarViewController: UIViewController ,UICollectionViewDelegate,UICollectionViewDataSource{
 
     //是否开启网格模式
-    var enableGrid:Bool = true{
+   public  var enableGrid:Bool = true{
         didSet{
             self.collectionView?.reloadData()
         }
     }
     
-    var delegate:JWCalendarViewControllerDelegate?
+    public weak var delegate:JWCalendarViewControllerDelegate?
     
     //单选
-    var singleSelected:Bool = false{
+    public var singleSelected:Bool = false{
         willSet{
             //单选
             if !singleSelected{
@@ -70,7 +70,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     }
     
     
-    var minDate:Date = Date(){
+   public  var minDate:Date = Date(){
         willSet{
             
                 if self.maxDate == nil{
@@ -99,7 +99,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
         }
     }
     
-    var maxDate:Date?{
+    public var maxDate:Date?{
         willSet{
             if let maxDate = newValue{
                 
@@ -128,7 +128,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //展示某天
-    func scrollToCurrent(dateComps:DateComponents,animated:Bool){
+    public func scrollToCurrent(dateComps:DateComponents,animated:Bool){
         if let date = calendar.date(from: dateComps){
             scrollToCurrent(date: date, animated: animated)
         }
@@ -136,7 +136,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //展示某天
-    func scrollToCurrent(date:Date,animated:Bool){
+    public func scrollToCurrent(date:Date,animated:Bool){
         //比最小时间小 retrun
         if date.compare(self.minDate) == .orderedAscending{
             return
@@ -169,7 +169,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //添加日期
-    func addDate(date:Date,forState state:DayItemState)  {
+   public func addDate(date:Date,forState state:DayItemState)  {
         let dateComps = calendar.dateComponents([.year,.month,.day,.weekday], from: date)
         let monthCountKey:Int = numberOfDaysInMonth(year: dateComps.year!, month: dateComps.month!)
         
@@ -184,7 +184,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //添加日期
-    func addDate(dateComps:DateComponents,forState state:DayItemState)  {
+   public func addDate(dateComps:DateComponents,forState state:DayItemState)  {
         
         let tempDate:Date? =  calendar.date(from: dateComps)
         
@@ -205,7 +205,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     }
     
     //添加日期
-    func addDates(dateArray:[Date],forState state:DayItemState) {
+   public func addDates(dateArray:[Date],forState state:DayItemState) {
         for date in dateArray{
             addDate(date: date, forState: state)
         }
@@ -213,7 +213,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
 
     
     //  closure 参数 Int:index 索引   返回 Date DateItemState
-    func addDateArray(dateCount:Int,usingClosure:@escaping (Int)->(Date,DayItemState)) {
+   public func addDateArray(dateCount:Int,usingClosure:@escaping (Int)->(Date,DayItemState)) {
         for index in 0..<dateCount{
             let result = usingClosure(index)
             addDate(date: result.0, forState: result.1)
@@ -223,7 +223,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //添加日期
-    func addDates(dateCompsArray:[DateComponents],forState state:DayItemState) {
+   public func addDates(dateCompsArray:[DateComponents],forState state:DayItemState) {
         for dateComps in dateCompsArray{
             addDate(dateComps: dateComps, forState: state)
         }
@@ -231,7 +231,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //  closure 参数 Int:index 索引   返回 Date DateItemState
-    func addDateCompsArray(dateCompsCount:Int,usingClosure:@escaping (Int)->(DateComponents,DayItemState)) {
+   public func addDateCompsArray(dateCompsCount:Int,usingClosure:@escaping (Int)->(DateComponents,DayItemState)) {
         for index in 0..<dateCompsCount{
             let result = usingClosure(index)
             addDate(dateComps: result.0, forState: result.1)
@@ -240,7 +240,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
 
     
     //移除所有
-    func  removeAll(){
+   public func  removeAll(){
         
         for (_,group) in self.daysContainer{
             for var dayDict in group {
@@ -254,7 +254,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     }
     
     //移除所有
-    func  removeAll(forState state:DayItemState){
+   public func  removeAll(forState state:DayItemState){
         
         for (_,group) in self.daysContainer{
             for var dayDict in group {
@@ -284,7 +284,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
 
     
     //移除日期
-    func removeDate(date:Date)  {
+  public  func removeDate(date:Date)  {
         
         let dateComps = calendar.dateComponents([.year,.month,.day,.weekday], from: date)
         
@@ -304,14 +304,14 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //移除日期
-    func removeDates(dateArray:[Date]) {
+   public func removeDates(dateArray:[Date]) {
         for date in dateArray{
             removeDate(date: date)
         }
     }
     
     //  closure 参数 Int:index 索引   返回 Date
-    func removeDates(dateCount:Int,usingClosure:@escaping (Int)->Date) {
+   public func removeDates(dateCount:Int,usingClosure:@escaping (Int)->Date) {
         for index in 0..<dateCount{
             let date = usingClosure(index)
             removeDate(date:date)
@@ -320,7 +320,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //添加日期
-    func removeDate(dateComps:DateComponents)  {
+  public  func removeDate(dateComps:DateComponents)  {
       
         let monthCountKey:Int = numberOfDaysInMonth(year: dateComps.year!, month: dateComps.month!)
         
@@ -337,14 +337,14 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     
     
     //添加日期
-    func removeDateArray(dateCompsArray:[DateComponents]) {
+  public  func removeDateArray(dateCompsArray:[DateComponents]) {
         for dateComps in dateCompsArray{
             removeDate(dateComps: dateComps)
         }
     }
     
     //  closure 参数 Int:index 索引   返回 Date 
-    func removeDateArray(dateCompsCount:Int,usingClosure:@escaping (Int)->DateComponents) {
+  public  func removeDateArray(dateCompsCount:Int,usingClosure:@escaping (Int)->DateComponents) {
         for index in 0..<dateCompsCount{
             let dateComps = usingClosure(index)
             removeDate(dateComps: dateComps)
@@ -588,7 +588,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     /**
      *  是否是闰年
      */
-    func isLeapYear(year:Int) -> Bool {
+    public func isLeapYear(year:Int) -> Bool {
         if (year%4==0) {
             if (year%100==0) {
                 if (year%400==0) {
@@ -608,7 +608,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     /**
      *  根据对应的年 和月  返回当月对应的天数
      */
-    func numberOfDaysInMonth(year:Int,month:Int) -> Int {
+    public func numberOfDaysInMonth(year:Int,month:Int) -> Int {
         // 31  28  31  30  31  30  31  31  30  31  30  31
         let daysOfMonth:[Int] = [31,28,31,30,31,30,31,31,30,31,30,31]
         
@@ -751,7 +751,7 @@ public class JWCalendarViewController: UIViewController ,UICollectionViewDelegat
     }
     
     //去掉多余的日期部分，保证计算日期的差的准确度
-    func  getDateRemoveStopLastUnit(date:Date,lastUnit:Calendar.Component,isFromDate:Bool) -> Date {
+   public func  getDateRemoveStopLastUnit(date:Date,lastUnit:Calendar.Component,isFromDate:Bool) -> Date {
         //初始化
         let unitArray:[Calendar.Component] = [.year,.month,.day,.hour,.minute,.second]
         

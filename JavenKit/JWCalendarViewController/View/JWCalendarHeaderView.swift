@@ -91,7 +91,7 @@ class JWCalendarHeaderView: UIView {
     }
     
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         let topPromptH:CGFloat = (self.bounds.height - self.sectionInset.top - self.sectionInset.bottom)*0.45
@@ -152,7 +152,7 @@ class JWCalendarHeaderView: UIView {
         lineView.frame = CGRect(x: 0, y: self.bounds.height  - 0.5, width: self.bounds.width, height: 0.5)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

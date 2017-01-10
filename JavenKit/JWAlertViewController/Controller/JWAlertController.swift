@@ -488,7 +488,7 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
     
     
     //添加action
-    func addAction(actionTitle:String,actionStyle:JWAlertActionStyle,handler:@escaping JWAlertAction.JWActionClosure) {
+    public func addAction(actionTitle:String,actionStyle:JWAlertActionStyle,handler:@escaping JWAlertAction.JWActionClosure) {
         let alertAction:JWAlertAction = JWAlertAction(title: actionTitle, style: actionStyle, handler: handler)
         addAction(action: alertAction)
     }
@@ -496,7 +496,7 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
     
     
     //添加action
-    func  addAction(action:JWAlertAction) {
+    public func  addAction(action:JWAlertAction) {
         //如果是默认
         actions.append(action)
         

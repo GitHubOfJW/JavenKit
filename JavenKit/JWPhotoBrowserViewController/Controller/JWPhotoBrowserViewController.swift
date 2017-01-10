@@ -15,13 +15,13 @@ public class JWPhotoBrowserViewController: UICollectionViewController,UIViewCont
     
     
     //如果是图片直接调用  不是则下载完成后调用
-    typealias JWPhotoCompletionClosure = (UIImage?)->Void
+   public typealias JWPhotoCompletionClosure = (UIImage?)->Void
     
     //图片获取
-    typealias JWPhotoHanlderClosure = ((Int,UIImageView,@escaping JWPhotoCompletionClosure) -> Void)
+   public typealias JWPhotoHanlderClosure = ((Int,UIImageView,@escaping JWPhotoCompletionClosure) -> Void)
     
     //返回对应的View
-    typealias JWPhotoSourceViewClosure = (Int)->((UIView?,UIImage?))?
+   public  typealias JWPhotoSourceViewClosure = (Int)->((UIView?,UIImage?))?
     
     
     
@@ -110,7 +110,7 @@ public class JWPhotoBrowserViewController: UICollectionViewController,UIViewCont
        
     }
     
-    var  lastAttributeString:NSAttributedString?
+    private var  lastAttributeString:NSAttributedString?
     
     var IndexPromptLabel:UILabel = UILabel()
     
@@ -120,10 +120,7 @@ public class JWPhotoBrowserViewController: UICollectionViewController,UIViewCont
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-//        let r = CGFloat(arc4random_uniform(255))/255.0
-//        let g = CGFloat(arc4random_uniform(255))/255.0
-//        let b = CGFloat(arc4random_uniform(255))/255.0
-//        view.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1)
+ 
         
         self.collectionView!.register(JWPhotoBrowserCell.self, forCellWithReuseIdentifier: PBReuseIdentifier)
         
@@ -186,7 +183,7 @@ public class JWPhotoBrowserViewController: UICollectionViewController,UIViewCont
     }
     
     override public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("选中了：\(indexPath)")
+//        print("选中了：\(indexPath)")
     }
     
     override public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -265,7 +262,6 @@ public class JWPhotoBrowserViewController: UICollectionViewController,UIViewCont
           return self.interactionTransitioning.isStart ? self.interactionTransitioning : nil
     }
     
-//     public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController?
  
     
     override public func viewWillAppear(_ animated: Bool) {

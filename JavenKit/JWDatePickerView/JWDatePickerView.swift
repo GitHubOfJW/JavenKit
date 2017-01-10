@@ -46,10 +46,10 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     //MARK:公有方法 和 公有属性
     
     //获取单位
-    var unitStrClosure:((NSCalendar.Unit)-> String)?
+    public var unitStrClosure:((NSCalendar.Unit)-> String)?
     
     //选中日期
-    var didSelectedDateClosure:((Date)->())?
+   public var didSelectedDateClosure:((Date)->())?
     
     //无限滚动的最大范围
     private let MaxRangeValue:Int = 88888
@@ -60,13 +60,13 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     //是否正在滚动
     private var currentOperationComponent:Int = 0
     
-    typealias UnitType = Calendar.Component
+    public typealias UnitType = Calendar.Component
     
     /**
      *   最小日期
      */
     private var _minDate:Date?
-    var minDate:Date?{
+    public var minDate:Date?{
         set{
             
             if let minD = newValue{
@@ -175,7 +175,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
      *   最大日期
      */
     private var _maxDate:Date?
-    var maxDate:Date?
+    public var maxDate:Date?
         {
         set{
             if let maxD = newValue{
@@ -285,7 +285,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
      *  当前日期
      */
     private var _date:Date?
-    var date:Date?
+    public var date:Date?
     {
         set{
             if let d =  newValue {
@@ -360,7 +360,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
      *  pickerModel
      */
     private var _pickerMode:JWDatePickerMode?
-    var pickerMode:JWDatePickerMode?{
+    public var pickerMode:JWDatePickerMode?{
         get{
             if _pickerMode == nil
             {
@@ -429,7 +429,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     /**
      *  是否是闰年
      */
-    func isLeapYear(year:Int) -> Bool {
+    public func isLeapYear(year:Int) -> Bool {
         if (year%4==0) {
             if (year%100==0) {
                 if (year%400==0) {
@@ -449,7 +449,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     /**
      *  根据对应的年 和月  返回当月对应的天数
      */
-    func numberOfDaysInMonth(year:Int,month:Int) -> Int {
+   public func numberOfDaysInMonth(year:Int,month:Int) -> Int {
         // 31  28  31  30  31  30  31  31  30  31  30  31
         let daysOfMonth:[Int] = [31,28,31,30,31,30,31,31,30,31,30,31]
         
@@ -468,7 +468,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     /**
      *  获取一天中的  最小时间   最大时间
      */
-    func dayFirstOrLastDate(date:Date,isLast:Bool) -> Date {
+   public func dayFirstOrLastDate(date:Date,isLast:Bool) -> Date {
         let dateComps:DateComponents = calendar.dateComponents([.year,.day,.month,.hour,.minute,.second], from: date)
         let hour:Int = dateComps.hour!
         let minute:Int = dateComps.minute!
@@ -497,7 +497,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     
     //开启后 如果 最大日期 或者 最小日期有值 则单向或者双向有限制 否则无效  默认不开启限制
     private var _enableLimited:Bool?
-    var enableLimited:Bool?{
+    public var enableLimited:Bool?{
         set{
             if let enable = newValue{
                 _enableLimited = enable
@@ -1305,7 +1305,7 @@ public class JWDatePickerView: UIView,UIPickerViewDelegate,UIPickerViewDataSourc
     
     
     //去掉多余的日期部分，保证计算日期的差的准确度
-    func  getDateRemoveStopLastUnit(date:Date,lastUnit:UnitType,isFromDate:Bool) -> Date {
+    public func  getDateRemoveStopLastUnit(date:Date,lastUnit:UnitType,isFromDate:Bool) -> Date {
         //初始化
         let unitArray:[UnitType] = [ .year, .month, .day, .hour, .minute, .second]
         

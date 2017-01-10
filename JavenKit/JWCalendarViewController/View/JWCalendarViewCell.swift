@@ -18,9 +18,9 @@ public enum DayItemState:Int {
 }
 
 
-class JWCalendarViewCell: UICollectionViewCell {
+public class JWCalendarViewCell: UICollectionViewCell {
      
-    var dayItemState:DayItemState = .normal{
+     public var dayItemState:DayItemState = .normal{
         willSet{
             
             self.drawView.dayItemState = newValue
@@ -107,7 +107,7 @@ class JWCalendarViewCell: UICollectionViewCell {
     
     
     //布局
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         bgView.frame = CGRect(x: 0, y: 0, width: self.contentView.bounds.width, height: self.contentView.bounds.height)
@@ -134,7 +134,7 @@ class JWCalendarViewCell: UICollectionViewCell {
         
     }
     
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if self.dayItemState == .selected || self.dayItemState == .normal{
             return super.point(inside: point, with: event)
         }else{
@@ -143,13 +143,14 @@ class JWCalendarViewCell: UICollectionViewCell {
     }
     
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 
-//绘制北京
+//绘制背景
+
 class  JWCalendarDrawView: UIView {
     var dayItemState:DayItemState = DayItemState.normal{
         didSet{
@@ -163,11 +164,11 @@ class  JWCalendarDrawView: UIView {
         self.backgroundColor = UIColor.white
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         super.draw(rect)
         
         self.backgroundColor?.setFill()

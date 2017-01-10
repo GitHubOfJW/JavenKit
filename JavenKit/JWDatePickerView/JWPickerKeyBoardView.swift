@@ -10,17 +10,17 @@ import UIKit
 
 public class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewDataSource{
     
-    typealias ConfirmDateClosure = (Int) -> ()
+   public  typealias ConfirmDateClosure = (Int) -> ()
     
-    var didConfirmClosure:ConfirmDateClosure?
+    public var didConfirmClosure:ConfirmDateClosure?
     
-    var numberClosure:(()->Int)?
+    public var numberClosure:(()->Int)?
     
-    var titleClosure:((Int)->String)?
+    public var titleClosure:((Int)->String)?
      
-    var isRemove:Bool =  false
+    public  var isRemove:Bool =  false
     
-    var font:UIFont?{
+    public var font:UIFont?{
         willSet{
             if let f = font {
                 titleLabel?.font = f
@@ -32,7 +32,7 @@ public class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewData
     }
     
     
-    var title:String?{
+   public var title:String?{
         willSet{
             if let t  = newValue{
                 titleLabel?.text = t
@@ -62,7 +62,7 @@ public class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewData
     private var titleView:UIView?
     
     //pickerView
-    let pickerView:UIPickerView = UIPickerView()
+    public let pickerView:UIPickerView = UIPickerView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -253,7 +253,7 @@ public class JWPickerKeyBoardView: UIView ,UIPickerViewDelegate,UIPickerViewData
         UIApplication.shared.keyWindow?.endEditing(true)
     }
 
-    func  reloadData() {
+    public func  reloadData() {
         self.currentIndex = 0
         pickerView.reloadAllComponents()
     }
