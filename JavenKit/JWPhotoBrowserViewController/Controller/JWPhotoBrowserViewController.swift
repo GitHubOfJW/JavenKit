@@ -29,7 +29,7 @@ public class JWPhotoBrowserViewController: UICollectionViewController,UIViewCont
     var photoSource:[JWPhotoBrowerItem] = [JWPhotoBrowerItem]()
     
     //初始化
-    convenience init(photoCount:Int,showIndex:Int,thumbnailClosure:  @escaping JWPhotoHanlderClosure,bigImageClosure: @escaping JWPhotoHanlderClosure,sourceViewClosure:JWPhotoSourceViewClosure){
+    convenience public init(photoCount:Int,showIndex:Int,thumbnailClosure:  @escaping JWPhotoHanlderClosure,bigImageClosure: @escaping JWPhotoHanlderClosure,sourceViewClosure:JWPhotoSourceViewClosure){
         
         
         //1.初始化布局
