@@ -11,7 +11,7 @@ import UIKit
 extension Bundle {
 
     class func image(named:String) -> UIImage? {
-        let bundle = Bundle(path:Bundle(for: JWAutoScrollView.classForCoder()).path(forResource: "images", ofType: "bundle")!)
+        let bundle = Bundle(path:Bundle(for: JWAutoScrollView.classForCoder()).path(forResource: "JavenKit", ofType: "bundle")!)
         
         let path = bundle?.path(forResource: named, ofType: "png")
         return UIImage(contentsOfFile: path!)
