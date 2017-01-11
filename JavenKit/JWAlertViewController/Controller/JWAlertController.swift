@@ -238,14 +238,14 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
             if preferredStyle == .popover{
                 actionBtn.lineMargin = 10
                 actionBtn.lineView.isHidden = self.actiontBtnArray.count < 1
-                actionBtn.setBackgroundImage(UIImage(named:"images.bundle/normalBlackBg"), for: UIControlState.normal)
-                actionBtn.setBackgroundImage(UIImage(named:"images.bundle/normalBlackBg"), for: UIControlState.highlighted)
+                actionBtn.setBackgroundImage(Bundle.image(named:"normalBlackBg"), for: UIControlState.normal)
+                actionBtn.setBackgroundImage(Bundle.image(named:"normalBlackBg"), for: UIControlState.highlighted)
                 actionBtn.setTitleColor(UIColor.white, for: UIControlState.normal)
                 actionBtn.setTitleColor(UIColor.white, for: UIControlState.highlighted)
             }else{
                 
-                actionBtn.setBackgroundImage(UIImage(named:"images.bundle/normalBg"), for: UIControlState.normal)
-                actionBtn.setBackgroundImage(UIImage(named:"images.bundle/highlightBg"), for: UIControlState.highlighted)
+                actionBtn.setBackgroundImage(Bundle.image(named:"normalBg"), for: UIControlState.normal)
+                actionBtn.setBackgroundImage(Bundle.image(named:"highlightBg"), for: UIControlState.highlighted)
                 
                 switch action.actionStyle {
                 case .cancel:

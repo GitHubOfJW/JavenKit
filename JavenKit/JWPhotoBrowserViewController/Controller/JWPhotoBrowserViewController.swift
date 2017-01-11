@@ -15,14 +15,13 @@ public class JWPhotoBrowserViewController: UICollectionViewController,UIViewCont
     
     
     //如果是图片直接调用  不是则下载完成后调用
-   public typealias JWPhotoCompletionClosure = (UIImage?)->Void
+    public typealias JWPhotoCompletionClosure = (UIImage?)->Void
     
     //图片获取
-   public typealias JWPhotoHanlderClosure = ((Int,UIImageView,@escaping JWPhotoCompletionClosure) -> Void)
+    public typealias JWPhotoHanlderClosure = ((Int,UIImageView,@escaping JWPhotoCompletionClosure) -> Void)
     
     //返回对应的View
-   public  typealias JWPhotoSourceViewClosure = (Int)->((UIView?,UIImage?))?
-    
+    public  typealias JWPhotoSourceViewClosure = (Int)->((UIView?,UIImage?))?
     
     
     //数组

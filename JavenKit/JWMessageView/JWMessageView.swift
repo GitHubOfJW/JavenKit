@@ -75,8 +75,8 @@ public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
         messageButton.setTitleColor(UIColor.white, for: UIControlState.normal)
         messageButton.setTitleColor(UIColor.white, for: UIControlState.highlighted)
         
-        messageButton.setBackgroundImage(UIImage(named:"images.bundle/JWMessage"), for: UIControlState.normal)
-        messageButton.setBackgroundImage(UIImage(named:"images.bundle/JWMessage"), for: UIControlState.highlighted)
+        messageButton.setBackgroundImage(Bundle.image(named:"JWMessage"), for: UIControlState.normal)
+        messageButton.setBackgroundImage(Bundle.image(named:"JWMessage"), for: UIControlState.highlighted)
          
         messageButton.addTarget(self, action: #selector(JWMessageView.messageTouchUpInside(btn:)), for: UIControlEvents.touchUpInside)
         
@@ -87,7 +87,7 @@ public class JWMessageView: UIView,UIDynamicAnimatorDelegate {
         
         
         //消失后显示的图片
-        disappearedImageView.image = UIImage(named:"images.bundle/Bom")
+        disappearedImageView.image = Bundle.image(named:"Bom")
         disappearedImageView.isHidden = true
         addSubview(disappearedImageView)
     

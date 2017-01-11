@@ -19,10 +19,10 @@ public class JWProgressHUDLoadingView: UIView {
                     self.imageView.startAnimating()
                 }else if type == .success{
                     self.imageView.stopAnimating()
-                    imageView.image = UIImage(named:"images.bundle/success")!
+                    imageView.image = Bundle.image(named:"success")!
                 }else if type == .error{
                     self.imageView.stopAnimating()
-                    imageView.image = UIImage(named:"images.bundle/error")!
+                    imageView.image = Bundle.image(named:"error")!
                 }else{
                     self.imageView.stopAnimating()
                 }
@@ -43,7 +43,7 @@ public class JWProgressHUDLoadingView: UIView {
         
         addSubview(imageView)
         
-        imageView.animationImages = [UIImage(named:"images.bundle/loading1")!,UIImage(named:"images.bundle/loading2")!,UIImage(named:"images.bundle/loading3")!]
+        imageView.animationImages = [Bundle.image(named:"loading1")!,Bundle.image(named:"loading2")!,Bundle.image(named:"loading3")!]
         imageView.animationDuration = 0.3
         imageView.animationRepeatCount =  10000
         
