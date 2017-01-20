@@ -20,7 +20,7 @@
 
 ## 弹出提示（JWAlertController）
  ![](https://github.com/GitHubOfJW/JWKit/blob/master/showGif/JWAlertController.gif)
-## 加载提示（简介大方）
+## 加载提示（简洁大方）
  ![](https://github.com/GitHubOfJW/JWKit/blob/master/showGif/JWProgressHUD.gif)
 ## WebViewController(彩色进度条)
  ![](https://github.com/GitHubOfJW/JWKit/blob/master/showGif/JWWebView.gif)
