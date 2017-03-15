@@ -3,7 +3,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "JavenKit"
-  s.version      = "0.0.7"
+  s.version      = “0.0.8”
   s.summary      = "Swift kit"
   s.homepage     = "https://github.com/GitHubOfJW/JavenKit"
   s.license      = "MIT"
