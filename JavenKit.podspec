@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/GitHubOfJW/JavenKit.git", :tag => "#{s.version}" }
   s.source_files = "JavenKit","JavenKit/**/*.{swift}"
-  s.resources = "JavenKit/images.bundle"
+  s.resources = "JavenKit/JavenKit.bundle"
   s.framework  = "UIKit"
 end
 
