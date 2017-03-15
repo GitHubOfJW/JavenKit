@@ -141,7 +141,7 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
     
     
     //加载
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.clear
@@ -207,7 +207,8 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
         
         
         //如果按钮大于2个 隐藏线
-        self.lineView.isHidden = self.actions.count > 2
+        self.lineView.isHidden = (self.actions.count > 2 || self.actions.count == 1 || preferredStyle != .alert)
+        
         //移除按钮
         for btn in self.actiontBtnArray{
             btn.removeFromSuperview()
@@ -222,7 +223,8 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
         for action in self.actions{
             let actionBtn:JWActionButton = JWActionButton()
             actionBtn.tag  = self.actiontBtnArray.count
-            actionBtn.lineView.isHidden = self.actions.count <= 2
+            
+            actionBtn.lineView.isHidden = !(self.actions.count > 2 || self.actions.count == 1 || preferredStyle != .alert)// self.actions.count <= 2
             
             
             actionBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
@@ -238,14 +240,14 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
             if preferredStyle == .popover{
                 actionBtn.lineMargin = 10
                 actionBtn.lineView.isHidden = self.actiontBtnArray.count < 1
-                actionBtn.setBackgroundImage(Bundle.image(named:"normalBlackBg"), for: UIControlState.normal)
-                actionBtn.setBackgroundImage(Bundle.image(named:"normalBlackBg"), for: UIControlState.highlighted)
+                actionBtn.setBackgroundImage(UIImage(named:"normalBlackBg"), for: UIControlState.normal)
+                actionBtn.setBackgroundImage(UIImage(named:"normalBlackBg"), for: UIControlState.highlighted)
                 actionBtn.setTitleColor(UIColor.white, for: UIControlState.normal)
                 actionBtn.setTitleColor(UIColor.white, for: UIControlState.highlighted)
             }else{
                 
-                actionBtn.setBackgroundImage(Bundle.image(named:"normalBg"), for: UIControlState.normal)
-                actionBtn.setBackgroundImage(Bundle.image(named:"highlightBg"), for: UIControlState.highlighted)
+                actionBtn.setBackgroundImage(UIImage(named:"normalBg"), for: UIControlState.normal)
+                actionBtn.setBackgroundImage(UIImage(named:"highlightBg"), for: UIControlState.highlighted)
                 
                 switch action.actionStyle {
                 case .cancel:
@@ -271,7 +273,7 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
         
     }
     
-    override public func viewWillLayoutSubviews() {
+    override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         
@@ -341,18 +343,18 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
         let operationX:CGFloat = (containViewW - operationW)/2
         
         
-        let operationH:CGFloat = (self.actions.count > 2 || preferredStyle == .popover) ? btnH * CGFloat(self.actions.count) : btnH
+        let operationH:CGFloat = (self.actions.count > 2 || preferredStyle != .alert) ? btnH * CGFloat(self.actions.count) : btnH
         operationView.frame = CGRect(x: operationX, y: operationY, width: operationW, height: operationH)
         
         
-        let btnW:CGFloat = (self.actions.count > 2 || self.actions.count == 1 || preferredStyle == .popover) ? containViewW : (containViewW/2 - 0.25)
+        let btnW:CGFloat = (self.actions.count > 2 || self.actions.count == 1 || preferredStyle != .alert) ? containViewW : (containViewW/2 - 0.25)
         
         
         //布局按钮
         var i:Int = 0
         for btn in self.actiontBtnArray{
-            let btnX:CGFloat = (self.actions.count > 2 || preferredStyle == .popover) ? 0 : (btnW+0.5) * CGFloat(i)
-            let btnY:CGFloat = (self.actions.count > 2 || preferredStyle == .popover) ? (btnH * CGFloat(i)) : 0
+            let btnX:CGFloat = (self.actions.count > 2 || preferredStyle != .alert) ? 0 : (btnW+0.5) * CGFloat(i)
+            let btnY:CGFloat = (self.actions.count > 2 || preferredStyle != .alert) ? (btnH * CGFloat(i)) : 0
             
             if (messageLabel.isHidden && titleLabel.isHidden) && i == 0 && self.preferredStyle ==  .actionSheet {
                 btn.lineView.isHidden = true
@@ -385,7 +387,7 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
             var arrowPointY:CGFloat = 0
             
             //下半部分
-            if (sourceViewRect.maxY + sourceViewRect.minY)/2 > view.bounds.width/2{
+            if (sourceViewRect.maxY + sourceViewRect.minY)/2 > view.bounds.height/2{
                 //右边
                 if (sourceViewRect.minX + sourceViewRect.maxX)/2 > view.bounds.width/2{
                     
@@ -494,7 +496,6 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
     }
     
     
-    
     //添加action
     public func  addAction(action:JWAlertAction) {
         //如果是默认
@@ -531,14 +532,14 @@ public class JWAlertController: UIViewController ,UIViewControllerTransitioningD
     
     
     
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.modalPresentationStyle  =  .custom
         let presentTrasition:JWAlertPresentTransitioning = JWAlertPresentTransitioning()
         presentTrasition.preferredStyle = self.preferredStyle
         return presentTrasition
     }
     
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.modalPresentationStyle  =  .custom
         let dismissTrasition:JWAlertDismissTransitioning = JWAlertDismissTransitioning()
         dismissTrasition.preferredStyle = self.preferredStyle
