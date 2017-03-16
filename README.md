@@ -27,5 +27,5 @@
 ## MessageView(消息拖拽效果)
 ![](https://github.com/GitHubOfJW/JWKit/blob/master/showGif/JWMessageView.gif)
 ## 学习交流
-####觉得还凑活的朋友给个星，一起学习交流  QQ:969271828 
+#### 觉得还凑活的朋友给个星，一起学习交流  QQ:969271828 
 
