@@ -1,4 +1,4 @@
-# JWKit 
+# JavenKit 
 做的第一个Swift项目，好多控件不想用别人的所以自己就一个一个写，积累了一点点，以后会不断的添加
 
 # Installation with CocoaPods
